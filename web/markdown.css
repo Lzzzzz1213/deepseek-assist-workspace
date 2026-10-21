@@ -1,0 +1,85 @@
+/* ============================================================
+   DeepSeek协助工作区 · 安全 Markdown 显示样式
+   作用域：仅 .wr-markdown / .wr-md-*，不改动页面两栏布局与轻提示定位。
+   取值：全部复用 vendor/lanven-ui.tokens.css 的 --lv-* 变量（冷白/靛蓝双主题自动生效）。
+   代码区恒暗，沿用 --lv-term-*；宽表格与代码只做局部横向滚动，不撑宽气泡或整页。
+   ============================================================ */
+
+/* ---------- 1. 正文基线 ---------- */
+.wr-markdown{min-width:0;max-width:100%;font-size:var(--lv-fs-14);line-height:1.6;color:var(--lv-text-1);overflow-wrap:anywhere}
+.wr-markdown>*:first-child{margin-top:0}
+.wr-markdown>*:last-child{margin-bottom:0}
+.wr-md-p{margin:0 0 var(--lv-sp-3)}
+.wr-md-strong{font-weight:750}
+.wr-md-em{font-style:italic}
+.wr-md-s{text-decoration:line-through;color:var(--lv-text-3)}
+.wr-md-hr{margin:var(--lv-sp-4) 0;border:0;border-top:1px solid var(--lv-border)}
+
+/* ---------- 2. 标题：层次清楚但不过大 ---------- */
+.wr-md-h{margin:var(--lv-sp-4) 0 var(--lv-sp-2);line-height:1.3;font-weight:800}
+.wr-md-h1{font-size:var(--lv-fs-18)}
+.wr-md-h2{font-size:var(--lv-fs-16)}
+.wr-md-h3{font-size:var(--lv-fs-14);font-weight:750}
+.wr-md-h4,.wr-md-h5,.wr-md-h6{font-size:var(--lv-fs-13);font-weight:700;color:var(--lv-text-2)}
+
+/* ---------- 3. 列表（保留嵌套层级） ---------- */
+.wr-md-ul,.wr-md-ol{margin:0 0 var(--lv-sp-3);padding-left:var(--lv-sp-6)}
+.wr-md-li{margin:var(--lv-sp-1) 0}
+.wr-md-li::marker{color:var(--lv-text-3)}
+.wr-md-ul .wr-md-ul,.wr-md-ol .wr-md-ol,
+.wr-md-ul .wr-md-ol,.wr-md-ol .wr-md-ul{margin:var(--lv-sp-1) 0 0}
+.wr-md-li>.wr-md-p{margin:0 0 var(--lv-sp-2)}
+.wr-md-li>.wr-md-p:last-child{margin-bottom:0}
+.wr-md-task-cb{width:14px;height:14px;margin:0 var(--lv-sp-1) 0 0;vertical-align:-2px;accent-color:var(--lv-brand)}
+.wr-md-task-cb:disabled{cursor:default;opacity:1}
+
+/* ---------- 4. 引用：整块柔和背景 ---------- */
+.wr-md-quote{margin:0 0 var(--lv-sp-3);padding:var(--lv-sp-2) var(--lv-sp-3);
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-sm);
+  background:var(--lv-surface-2);color:var(--lv-text-2)}
+.wr-md-quote>:last-child{margin-bottom:0}
+
+/* ---------- 5. 表格：细边框 + 表头背景 + 局部横向滚动 ---------- */
+.wr-md-table-scroll{max-width:100%;margin:0 0 var(--lv-sp-3);overflow-x:auto;border-radius:var(--lv-r-sm)}
+.wr-md-table{width:max-content;min-width:100%;border-collapse:collapse;font-size:var(--lv-fs-13)}
+.wr-md-table th,.wr-md-table td{border:1px solid var(--lv-border);padding:var(--lv-sp-1) var(--lv-sp-2);
+  text-align:left;vertical-align:top}
+.wr-md-table th{background:var(--lv-surface-2);font-weight:700;white-space:nowrap}
+.wr-md-table .wr-md-p{margin:0}
+.wr-md-table .wr-md-al-left{text-align:left}
+.wr-md-table .wr-md-al-center{text-align:center}
+.wr-md-table .wr-md-al-right{text-align:right}
+
+/* ---------- 6. 代码：恒暗、可横向滚动、不执行 ---------- */
+.wr-md-code{margin:0 0 var(--lv-sp-3);border:1px solid var(--lv-term-bd);border-radius:var(--lv-r-md);
+  background:var(--lv-term-bg);overflow:hidden}
+.wr-md-code-label{display:block;padding:var(--lv-sp-1) var(--lv-sp-3);font-family:var(--lv-font-mono);
+  font-size:var(--lv-fs-12);color:var(--lv-term-dim);background:var(--lv-term-panel);
+  border-bottom:1px solid var(--lv-term-bd)}
+.wr-md-code pre{margin:0;padding:var(--lv-sp-3);overflow-x:auto;background:transparent}
+.wr-md-code code{font-family:var(--lv-font-mono);font-size:var(--lv-fs-12);line-height:1.6;color:var(--lv-term-tx);
+  white-space:pre;overflow-wrap:normal;word-break:normal;background:none;border:0;padding:0}
+.wr-md-code-inline{font-family:var(--lv-font-mono);font-size:.94em;padding:2px var(--lv-sp-1);
+  border-radius:var(--lv-r-xs);background:var(--lv-surface-3);color:var(--lv-text-1);overflow-wrap:anywhere}
+
+/* ---------- 7. 链接与图片占位：无 href、无 img ---------- */
+.wr-md-link{display:inline;font:inherit;color:var(--lv-brand-2);background:none;border:0;padding:0;
+  text-align:left;text-decoration:underline;text-underline-offset:2px;cursor:pointer;border-radius:var(--lv-r-xs)}
+.wr-md-link:hover{color:var(--lv-brand)}
+.wr-md-link .wr-md-code-inline{color:inherit}
+.wr-md-plain-link{color:var(--lv-text-2)}
+.wr-md-image{color:var(--lv-text-2)}
+.wr-md-copy{font:inherit;font-size:var(--lv-fs-12);margin-left:var(--lv-sp-2);padding:1px var(--lv-sp-2);
+  border:1px solid var(--lv-border-2);border-radius:var(--lv-r-xs);background:var(--lv-surface-2);
+  color:var(--lv-text-2);cursor:pointer}
+.wr-md-copy:hover{background:var(--lv-surface-3);color:var(--lv-text-1)}
+.wr-md-link:focus-visible,.wr-md-copy:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px}
+
+/* ---------- 8. 回退文本与高度折叠 ---------- */
+.wr-md-unknown{color:var(--lv-text-2)}
+.wr-md-plain{white-space:pre-wrap;font-size:var(--lv-fs-14);line-height:1.6;color:var(--lv-text-1);
+  overflow-wrap:anywhere}
+.wr-markdown.is-collapsed{max-height:160px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){
+  .wr-md-link,.wr-md-copy{transition:none}
+}

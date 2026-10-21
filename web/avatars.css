@@ -1,0 +1,61 @@
+/* 聊天消息本地头像：只作用于 #app 消息行，不影响列表、顶栏或系统文字头像 */
+#app .wr-msg .wr-msg-side{display:grid;place-items:center;flex:none;align-self:flex-start}
+#app .wr-msg-side>.lv-avatar.wr-avatar-media{width:64px;height:64px;border-radius:var(--lv-r-md);
+  position:relative;overflow:hidden;box-shadow:none;flex:none;font-size:var(--lv-fs-16)}
+#app .wr-msg-side>button.lv-avatar{padding:0;margin:0;appearance:none;-webkit-appearance:none;
+  border:1px solid var(--lv-border);
+  line-height:1;cursor:pointer;touch-action:manipulation;transition:border-color .16s ease,box-shadow .16s ease}
+#app .wr-msg-side>button.lv-avatar:hover{border-color:var(--lv-border-glow);
+  box-shadow:0 0 0 1px var(--lv-border-glow)}
+#app .wr-msg-side>button.lv-avatar:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px;
+  box-shadow:none}
+#app .wr-msg .wr-msg-body{max-width:calc(100% - 72px);min-width:0}
+#app .wr-msg-side>.lv-avatar>.wr-avatar-img{position:absolute;inset:0;display:block;
+  width:100%;height:100%;object-fit:cover;border-radius:inherit;pointer-events:none}
+
+/* 角色资料弹窗：dialog 不在 #app 内，样式统一限定在 wr-profile-dialog 作用域 */
+.wr-profile-dialog{width:min(440px,94vw);max-width:94vw}
+.wr-profile-dialog::before{content:none;display:none}
+.wr-profile-dialog .wr-dlg-body{min-width:0;max-width:100%;overflow-x:hidden;
+  overscroll-behavior:contain;gap:var(--lv-sp-4)}
+.wr-profile-dialog .wr-profile-hero{display:grid;grid-template-columns:128px minmax(0,1fr);
+  align-items:center;gap:var(--lv-sp-4);min-width:0}
+.wr-profile-dialog .wr-profile-figure{position:relative;width:128px;height:128px;display:grid;
+  place-items:center;overflow:hidden;border:1px solid var(--lv-border-glow);
+  border-radius:var(--lv-r-xl);background:var(--lv-spectrum-soft);box-shadow:var(--lv-shadow-1)}
+.wr-profile-dialog .wr-profile-photo{display:block;width:100%;height:100%;object-fit:cover;
+  border-radius:inherit}
+.wr-profile-dialog .wr-profile-fallback{display:grid;place-items:center;width:100%;height:100%;
+  color:var(--lv-brand-ink);font-size:var(--lv-fs-44);font-weight:800;letter-spacing:0}
+.wr-profile-dialog .wr-profile-photo[hidden],
+.wr-profile-dialog .wr-profile-fallback[hidden]{display:none}
+.wr-profile-dialog .wr-profile-identity{display:grid;gap:var(--lv-sp-2);min-width:0}
+.wr-profile-dialog .wr-profile-identity h4{margin:0;min-width:0;font-size:var(--lv-fs-22);
+  font-weight:800;line-height:1.3;letter-spacing:0;color:var(--lv-text-1);overflow-wrap:anywhere}
+.wr-profile-dialog .wr-profile-role-title{margin:0;font-size:var(--lv-fs-14);font-weight:700;
+  line-height:1.5;color:var(--lv-brand-ink);overflow-wrap:anywhere}
+.wr-profile-dialog .wr-profile-sign{margin:0;padding-top:var(--lv-sp-2);
+  border-top:1px solid var(--lv-border);font-size:var(--lv-fs-14);line-height:1.6;
+  color:var(--lv-text-2);overflow-wrap:anywhere}
+.wr-profile-dialog .wr-profile-facts{display:grid;gap:0;margin:0;min-width:0}
+.wr-profile-dialog .wr-profile-fact{display:grid;grid-template-columns:minmax(44px,64px) minmax(0,1fr);
+  gap:var(--lv-sp-3);min-width:0;padding:var(--lv-sp-3) 0;border-top:1px solid var(--lv-border)}
+.wr-profile-dialog .wr-profile-fact:first-child{padding-top:0;border-top:0}
+.wr-profile-dialog .wr-profile-fact dt{min-width:0;font-size:var(--lv-fs-12);font-weight:800;
+  line-height:1.7;color:var(--lv-text-3)}
+.wr-profile-dialog .wr-profile-fact dd{margin:0;min-width:0;font-size:var(--lv-fs-14);
+  line-height:1.7;color:var(--lv-text-2);overflow-wrap:anywhere}
+.wr-profile-dialog .wr-profile-note{flex:1 1 160px;min-width:0;font-size:var(--lv-fs-12);
+  line-height:1.5;color:var(--lv-text-3)}
+
+@media (max-width:380px){
+  .wr-profile-dialog .wr-profile-hero{grid-template-columns:minmax(0,1fr);justify-items:center;
+    text-align:center}
+  .wr-profile-dialog .wr-profile-identity{justify-items:center}
+  .wr-profile-dialog .wr-profile-sign{border-top:0;padding-top:0}
+  .wr-profile-dialog .wr-profile-fact{grid-template-columns:minmax(0,1fr);gap:var(--lv-sp-1)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #app .wr-msg-side>button.lv-avatar{transition:none}
+}

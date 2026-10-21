@@ -1,0 +1,599 @@
+/* ============================================================
+   DeepSeek协助工作区 · “你与 鲸鲸”私聊页
+   作用域：#privateChat 与 .wr-private-*；颜色只取公共 --lv-* 令牌。
+   覆盖 #app 直属的页头与正文，保留页面内原生 dialog 的通用祖先行为。
+   ============================================================ */
+
+.wr-private-entry{width:100%;display:flex;align-items:center;gap:var(--lv-sp-3);
+  padding:var(--lv-sp-2) var(--lv-sp-3);text-align:left;cursor:pointer;
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-md);
+  color:var(--lv-text-1);background:var(--lv-surface);font:inherit;box-shadow:none}
+.wr-private-entry:hover{border-color:var(--lv-border-glow);background:var(--lv-surface-2)}
+.wr-private-entry:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px}
+.wr-private-entry>img{width:48px;height:48px;object-fit:cover;flex:none;border-radius:var(--lv-r-md)}
+.wr-private-entry>span{display:grid;gap:3px;flex:1;min-width:0}
+.wr-private-entry b{font-size:var(--lv-fs-16)}
+.wr-private-entry small{font-size:var(--lv-fs-12);color:var(--lv-text-2)}
+.wr-private-entry>.wr-private-unread{display:inline-flex;flex:none;align-items:center;justify-content:center;
+  min-width:22px;height:22px;padding:0 6px;border:1px solid var(--lv-border-glow);border-radius:999px;
+  background:var(--lv-surface-3);color:var(--lv-brand);font-size:var(--lv-fs-12);font-weight:750}
+.wr-private-unread[hidden]{display:none!important}
+
+#privateChat[hidden]{display:none!important}
+
+#app.private-chat-open > .wr-head,
+#app.private-chat-open > .wr-body{display:none!important}
+
+#privateChat{
+  position:absolute;
+  inset:0;
+  z-index:24;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  color:var(--lv-text-1);
+  background:
+    radial-gradient(54% 34% at 2% 0%,var(--lv-bg-mesh-1),transparent 72%),
+    radial-gradient(48% 30% at 100% 4%,var(--lv-bg-mesh-2),transparent 74%),
+    radial-gradient(48% 30% at 50% 100%,var(--lv-bg-mesh-3),transparent 72%),
+    var(--lv-bg);
+  font-family:var(--lv-font-sans);
+  overscroll-behavior:none;
+}
+
+#privateChat *,
+.wr-private-dialog *{box-sizing:border-box}
+
+#privateChat button,
+#privateChat textarea{font:inherit}
+
+#privateChat button:focus-visible,
+#privateChat textarea:focus-visible,
+.wr-private-dialog button:focus-visible{
+  outline:2px solid var(--lv-brand);
+  outline-offset:2px;
+}
+
+/* 页头：结构细边框，不做彩色顶条或左侧装饰。 */
+.wr-private-header{
+  position:relative;
+  z-index:2;
+  flex:none;
+  display:flex;
+  align-items:center;
+  gap:var(--lv-sp-2);
+  min-height:64px;
+  padding:calc(var(--lv-sp-2) + env(safe-area-inset-top)) var(--lv-sp-3) var(--lv-sp-2);
+  border-bottom:1px solid var(--lv-border);
+  background:var(--lv-surface-glass);
+  backdrop-filter:blur(16px) saturate(1.25);
+}
+.wr-private-icon-btn{
+  flex:none;
+  width:44px;
+  min-width:44px;
+  min-height:44px;
+  padding:0;
+  border:1px solid transparent;
+  border-radius:var(--lv-r-md);
+  background:transparent;
+  color:var(--lv-text-1);
+  cursor:pointer;
+}
+.wr-private-icon-btn{font-size:20px;line-height:1}
+.wr-private-icon-btn:hover{background:var(--lv-surface-3)}
+.wr-private-menu-toggle{font-size:24px;line-height:1;letter-spacing:0}
+.wr-private-heading{display:flex;flex:1 1 auto;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.wr-private-title-row{display:flex;align-items:center;justify-content:center;gap:var(--lv-sp-2);width:100%;min-width:0}
+.wr-private-typing{
+  overflow:hidden;
+  flex:1 1 auto;
+  min-width:0;
+  max-width:100%;
+  margin:0;
+  color:var(--lv-text-2);
+  font-size:var(--lv-fs-14);
+  line-height:1.45;
+  text-align:center;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.wr-private-typing[hidden]{display:none!important}
+/* 菜单锚定页头右下角；隐藏时完全不占据消息区。 */
+.wr-private-menu{
+  position:absolute;
+  top:calc(100% + 2px);
+  right:var(--lv-sp-3);
+  z-index:30;
+  min-width:168px;
+  padding:var(--lv-sp-1);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-md);
+  background:var(--lv-surface);
+  box-shadow:0 10px 28px var(--lv-overlay);
+}
+.wr-private-menu[hidden]{display:none!important}
+.wr-private-menu-item{
+  display:block;
+  width:100%;
+  min-height:44px;
+  padding:0 var(--lv-sp-3);
+  border:1px solid transparent;
+  border-radius:var(--lv-r-sm);
+  background:transparent;
+  color:var(--lv-text-1);
+  cursor:pointer;
+  font-size:var(--lv-fs-14);
+  line-height:1.4;
+  text-align:left;
+}
+.wr-private-menu-item:hover:not(:disabled){
+  border-color:var(--lv-border);
+  background:var(--lv-surface-2);
+}
+.wr-private-menu-item.is-danger{color:var(--lv-danger)}
+.wr-private-menu-item.is-danger:hover:not(:disabled){border-color:var(--lv-danger-bd);background:var(--lv-danger-bg)}
+.wr-private-proactive{display:flex;align-items:center;justify-content:space-between;gap:var(--lv-sp-4)}
+.wr-private-menu-state{font-size:var(--lv-fs-12);color:var(--lv-text-2)}
+.wr-private-proactive[aria-checked="true"] .wr-private-menu-state{color:var(--lv-brand)}
+.wr-private-menu-note{margin:0;padding:0 var(--lv-sp-3) var(--lv-sp-2);font-size:var(--lv-fs-12);color:var(--lv-text-2)}
+.wr-private-notice{display:grid;gap:4px;pointer-events:auto;padding:var(--lv-sp-3);text-align:left;
+  border:1px solid var(--lv-border-2);border-radius:var(--lv-r-md);background:var(--lv-surface);
+  color:var(--lv-text-1);box-shadow:var(--lv-shadow-3);font:inherit;cursor:pointer}
+.wr-private-notice b{font-size:var(--lv-fs-14)}
+.wr-private-notice span{font-size:var(--lv-fs-12);color:var(--lv-text-2);overflow-wrap:anywhere}
+.wr-private-notice:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px}
+.wr-private-menu-item:disabled{
+  color:var(--lv-text-3);
+  cursor:not-allowed;
+  opacity:.6;
+}
+
+.wr-private-stage{
+  position:relative;
+  flex:1 1 auto;
+  min-height:0;
+  overflow:hidden;
+}
+.wr-private-scroller{
+  height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:var(--lv-scroll) transparent;
+  padding:var(--lv-sp-3) var(--lv-sp-3) var(--lv-sp-5);
+}
+/* Chromium 需 auto 才启用下方窄 WebKit 条；scroller 上方保留标准属性作回退。 */
+@supports selector(::-webkit-scrollbar){
+  .wr-private-scroller{scrollbar-width:auto;scrollbar-color:auto}
+  .wr-private-scroller::-webkit-scrollbar{width:6px;height:6px}
+  .wr-private-scroller::-webkit-scrollbar-track{background:transparent}
+  .wr-private-scroller::-webkit-scrollbar-thumb{background:var(--lv-scroll);border:1px solid transparent;border-radius:99px;background-clip:content-box}
+  .wr-private-scroller::-webkit-scrollbar-thumb:hover{background-color:var(--lv-text-3)}
+  .wr-private-scroller::-webkit-scrollbar-button{display:none;width:0;height:0}
+}
+.wr-private-list{position:relative;width:100%;min-width:0}
+
+/* 消息行：头像固定顶部，正文使用 14px。 */
+.wr-private-msg{
+  display:flex;
+  align-items:flex-start;
+  gap:var(--lv-sp-2);
+  min-width:0;
+  padding:6px 0;
+}
+.wr-private-msg.is-user{flex-direction:row-reverse}
+.wr-private-avatar{
+  position:relative;
+  display:grid;
+  flex:0 0 64px;
+  width:64px;
+  height:64px;
+  place-items:center;
+  overflow:hidden;
+  padding:0;
+  border:1px solid var(--lv-border-2);
+  border-radius:var(--lv-r-md);
+  background:var(--lv-surface-2);
+  color:var(--lv-text-2);
+  font-size:var(--lv-fs-16);
+  font-weight:800;
+}
+button.wr-private-avatar{cursor:pointer}
+button.wr-private-avatar:hover{border-color:var(--lv-border-glow)}
+.wr-private-avatar .wr-avatar-img{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:inherit;
+  object-fit:cover;
+}
+.wr-private-user-avatar{
+  border-color:var(--lv-border);
+  background:var(--lv-surface-3);
+  color:var(--lv-text-1);
+  font-size:var(--lv-fs-14);
+}
+.wr-private-main{
+  display:flex;
+  flex:1 1 auto;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  min-width:0;
+  max-width:calc(100% - 80px);
+}
+.wr-private-msg.is-user .wr-private-main{align-items:flex-end}
+.wr-private-meta{
+  display:flex;
+  align-items:baseline;
+  gap:var(--lv-sp-2);
+  min-width:0;
+  padding:0 4px;
+  color:var(--lv-text-3);
+  font-size:var(--lv-fs-12);
+}
+.wr-private-meta b{color:var(--lv-text-2);font-weight:700}
+.wr-private-meta time{font-variant-numeric:tabular-nums}
+
+.wr-private-bubble{
+  min-width:0;
+  max-width:100%;
+  padding:var(--lv-sp-2) var(--lv-sp-3);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-md);
+  background:var(--lv-surface);
+  color:var(--lv-text-1);
+  font-size:var(--lv-fs-14);
+  line-height:1.72;
+  overflow-wrap:anywhere;
+}
+.wr-private-msg.is-user .wr-private-bubble{
+  border-color:var(--lv-border-2);
+  background:var(--lv-surface-3);
+}
+html[data-lv-theme="light"] .wr-private-msg.is-user .wr-private-bubble{
+  background:#E0F1FE;
+}
+.wr-private-md{min-width:0;max-width:100%;font-size:var(--lv-fs-14);line-height:1.72}
+.wr-private-md > :first-child{margin-top:0}
+.wr-private-md > :last-child{margin-bottom:0}
+.wr-private-md p{margin:0 0 .65em}
+.wr-private-md h1,.wr-private-md h2,.wr-private-md h3,
+.wr-private-md h4,.wr-private-md h5,.wr-private-md h6{
+  margin:.7em 0 .4em;
+  color:var(--lv-text-1);
+  font-size:1.05em;
+  line-height:1.45;
+}
+.wr-private-md ul,.wr-private-md ol{margin:.35em 0 .65em;padding-left:1.35em}
+.wr-private-md blockquote{
+  margin:.5em 0;
+  padding:var(--lv-sp-2) var(--lv-sp-3);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-sm);
+  background:var(--lv-surface-2);
+  color:var(--lv-text-2);
+}
+.wr-private-md code{
+  padding:1px 4px;
+  border:1px solid var(--lv-border);
+  border-radius:4px;
+  background:var(--lv-surface-2);
+  font-family:var(--lv-font-mono);
+  font-size:.92em;
+}
+.wr-private-md pre{
+  max-width:100%;
+  overflow:auto;
+  margin:.55em 0;
+  padding:var(--lv-sp-2);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-sm);
+  background:var(--lv-surface-2);
+}
+.wr-private-md pre code{padding:0;border:0;background:transparent}
+.wr-private-md img{max-width:100%;height:auto;border-radius:var(--lv-r-sm)}
+.wr-private-md a{color:var(--lv-brand-2);overflow-wrap:anywhere}
+.wr-private-md table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}
+.wr-private-md th,.wr-private-md td{padding:4px 7px;border:1px solid var(--lv-border)}
+
+.wr-private-bubble.is-collapsed .wr-private-md{
+  max-height:160px;
+  overflow:hidden;
+}
+.wr-private-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  min-height:28px;
+  margin-top:6px;
+  padding:2px 4px;
+  border:0;
+  border-radius:var(--lv-r-sm);
+  background:transparent;
+  color:var(--lv-brand-2);
+  cursor:pointer;
+  font-size:var(--lv-fs-12);
+  line-height:1.4;
+}
+.wr-private-toggle:hover{background:var(--lv-surface-2)}
+.wr-private-delivery{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  max-width:100%;
+  min-height:24px;
+  color:var(--lv-text-3);
+  font-size:var(--lv-fs-12);
+  line-height:1.4;
+}
+.wr-private-delivery[hidden],.wr-private-retry[hidden]{display:none!important}
+.wr-private-delivery.is-error{color:var(--lv-danger)}
+.wr-private-delivery-label{
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:anywhere;
+  white-space:normal;
+}
+.wr-private-retry{
+  display:inline-flex;
+  flex:none;
+  align-items:center;
+  justify-content:center;
+  min-height:24px;
+  padding:2px 6px;
+  border:1px solid var(--lv-border-2);
+  border-radius:var(--lv-r-sm);
+  background:transparent;
+  box-shadow:none;
+  color:var(--lv-brand-2);
+  cursor:pointer;
+  font:inherit;
+  line-height:1.4;
+}
+.wr-private-retry:hover:not(:disabled){background:var(--lv-surface-2)}
+.wr-private-retry:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px}
+.wr-private-retry:disabled{
+  color:var(--lv-text-3);
+  cursor:not-allowed;
+  opacity:.6;
+}
+.wr-private-sticker{
+  display:block;
+  width:auto;
+  max-width:min(160px,100%);
+  max-height:160px;
+  margin-top:var(--lv-sp-2);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-sm);
+  object-fit:contain;
+}
+
+/* 空态：一句招呼与三个只填输入框的快捷问题。 */
+.wr-private-empty{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:var(--lv-sp-4);
+  padding:var(--lv-sp-5) var(--lv-sp-4);
+  pointer-events:none;
+  text-align:center;
+}
+.wr-private-empty[hidden]{display:none!important}
+.wr-private-hello{
+  max-width:34em;
+  margin:0;
+  color:var(--lv-text-2);
+  font-size:var(--lv-fs-14);
+  line-height:1.8;
+}
+.wr-private-quick{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:var(--lv-sp-2);
+  max-width:34em;
+  pointer-events:auto;
+}
+.wr-private-quick-btn{
+  max-width:100%;
+  min-height:38px;
+  padding:var(--lv-sp-2) var(--lv-sp-3);
+  border:1px solid var(--lv-border);
+  border-radius:999px;
+  background:var(--lv-surface);
+  color:var(--lv-text-2);
+  cursor:pointer;
+  font-size:var(--lv-fs-12);
+  line-height:1.45;
+  text-align:left;
+}
+.wr-private-quick-btn:hover{
+  border-color:var(--lv-border-2);
+  background:var(--lv-surface-2);
+  color:var(--lv-text-1);
+}
+
+/* 底部输入与状态；说明文字靠近输入框。 */
+.wr-private-composer{
+  flex:none;
+  padding:var(--lv-sp-2) var(--lv-sp-3) calc(var(--lv-sp-3) + env(safe-area-inset-bottom));
+  border-top:1px solid var(--lv-border);
+  background:var(--lv-surface-glass);
+  backdrop-filter:blur(16px) saturate(1.2);
+}
+.wr-private-status-row{
+  display:flex;
+  align-items:center;
+  gap:var(--lv-sp-2);
+  min-height:26px;
+  min-width:0;
+}
+.wr-private-status-row[hidden]{display:none!important}
+.wr-private-status{
+  overflow:hidden;
+  flex:1 1 auto;
+  color:var(--lv-text-3);
+  font-size:var(--lv-fs-12);
+  line-height:1.45;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.wr-private-spinner{
+  flex:0 0 13px;
+  width:13px;
+  height:13px;
+  border:2px solid var(--lv-border-2);
+  border-top-color:var(--lv-brand);
+  border-radius:50%;
+  animation:wr-private-spin .8s linear infinite;
+}
+.wr-private-spinner[hidden]{display:none!important}
+@keyframes wr-private-spin{to{transform:rotate(360deg)}}
+.wr-private-jump{
+  flex:none;
+  min-height:28px;
+  padding:2px var(--lv-sp-2);
+  border:1px solid var(--lv-border);
+  border-radius:999px;
+  background:var(--lv-surface);
+  color:var(--lv-brand-2);
+  cursor:pointer;
+  font-size:var(--lv-fs-12);
+}
+.wr-private-jump[hidden]{display:none!important}
+.wr-private-error{
+  margin:2px 0 var(--lv-sp-2);
+  padding:var(--lv-sp-2) var(--lv-sp-3);
+  border:1px solid var(--lv-danger-bd);
+  border-radius:var(--lv-r-sm);
+  background:var(--lv-danger-bg);
+  color:var(--lv-danger);
+  font-size:var(--lv-fs-12);
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+.wr-private-error[hidden]{display:none!important}
+.wr-private-input-row{
+  display:flex;
+  align-items:flex-end;
+  gap:var(--lv-sp-2);
+  min-width:0;
+}
+.wr-private-input{
+  display:block;
+  flex:1 1 auto;
+  width:100%;
+  min-width:0;
+  min-height:62px;
+  max-height:125px;
+  margin:0;
+  padding:9px var(--lv-sp-3);
+  overflow-y:auto;
+  resize:none;
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-md);
+  background:var(--lv-surface);
+  color:var(--lv-text-1);
+  font-size:var(--lv-fs-14);
+  line-height:21px;
+}
+.wr-private-input::placeholder{color:var(--lv-text-3)}
+.wr-private-input:focus{border-color:var(--lv-border-glow)}
+.wr-private-input:disabled{background:var(--lv-surface-2);color:var(--lv-text-3)}
+.wr-private-send{
+  flex:0 0 auto;
+  min-width:64px;
+  min-height:44px;
+  padding:0 var(--lv-sp-3);
+  border:1px solid transparent;
+  border-radius:var(--lv-r-md);
+  background:var(--lv-btn-grad);
+  color:var(--lv-text-inv);
+  cursor:pointer;
+  font-size:var(--lv-fs-14);
+  font-weight:700;
+}
+.wr-private-send:hover:not(:disabled){background:var(--lv-btn-grad-hover)}
+.wr-private-send:disabled{
+  border-color:var(--lv-border);
+  background:var(--lv-surface-3);
+  color:var(--lv-text-3);
+  cursor:not-allowed;
+}
+/* 原生确认框；只样式化本组件自己的 dialog。 */
+.wr-private-dialog{
+  width:min(360px,calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  padding:var(--lv-sp-5);
+  border:1px solid var(--lv-border);
+  border-radius:var(--lv-r-lg);
+  background:var(--lv-surface);
+  color:var(--lv-text-1);
+  font-family:var(--lv-font-sans);
+}
+.wr-private-dialog::backdrop{background:var(--lv-overlay)}
+.wr-private-dialog h3{
+  margin:0 0 var(--lv-sp-2);
+  color:var(--lv-text-1);
+  font-size:var(--lv-fs-16);
+  line-height:1.4;
+}
+.wr-private-dialog p{
+  margin:0;
+  color:var(--lv-text-2);
+  font-size:var(--lv-fs-14);
+  line-height:1.7;
+}
+.wr-private-dialog-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:var(--lv-sp-2);
+  margin-top:var(--lv-sp-5);
+}
+.wr-private-dialog-btn{
+  min-height:40px;
+  padding:0 var(--lv-sp-3);
+  border:1px solid var(--lv-border-2);
+  border-radius:var(--lv-r-md);
+  background:var(--lv-surface);
+  color:var(--lv-text-1);
+  cursor:pointer;
+  font-size:var(--lv-fs-14);
+}
+.wr-private-dialog-btn.is-danger{
+  border-color:var(--lv-danger-bd);
+  background:var(--lv-danger-bg);
+  color:var(--lv-danger);
+}
+
+@media (max-width:420px){
+  .wr-private-header{padding-inline:var(--lv-sp-2)}
+  .wr-private-scroller{padding-inline:var(--lv-sp-2)}
+  .wr-private-composer{padding-inline:var(--lv-sp-2)}
+  .wr-private-msg{gap:var(--lv-sp-1)}
+  .wr-private-main{max-width:calc(100% - 72px)}
+  .wr-private-presence{display:none}
+  .wr-private-bubble{padding:var(--lv-sp-2)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .wr-private-spinner{animation:none;border-top-color:var(--lv-border-2)}
+}
+
+@media (forced-colors:active){
+  .wr-private-avatar,.wr-private-bubble,.wr-private-input,.wr-private-dialog{
+    border-color:CanvasText;
+  }
+  .wr-private-send{background:ButtonFace;color:ButtonText;border-color:ButtonText}
+}

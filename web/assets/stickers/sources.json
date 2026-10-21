@@ -1,0 +1,132 @@
+{
+  "stickers": [
+    {
+      "id": "happy",
+      "title": "开心",
+      "file": "happy.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-016.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "571ac382b30ea7c23632693d30a0af975f73128e9fd57faa17df4596086774eb"
+    },
+    {
+      "id": "thinking",
+      "title": "思考",
+      "file": "thinking.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-071.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "42002d51655cc8cab191987a761724604b5e696a3647b75653e268323572fac9"
+    },
+    {
+      "id": "work",
+      "title": "上班",
+      "file": "work.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-017.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "2857f28570b54417003cc887415eb4d23ddcabb47b8bd849f2aba5ec67e289e2"
+    },
+    {
+      "id": "rest",
+      "title": "趴着歇会",
+      "file": "rest.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-065.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "cf6c2f819b1b84cb18732c463f6d0b3e50ff8df243831ee142c0485359c56147"
+    },
+    {
+      "id": "heart",
+      "title": "给心心",
+      "file": "heart.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-057.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "1c9ae8cfaa80cfc374e319fe1ca7d598fa43b276f04fc872054fff92fc9d3209"
+    },
+    {
+      "id": "goodnight",
+      "title": "晚安",
+      "file": "goodnight.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-050.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "dd5a1f2041df0574b27e24b329c13d966472a1277edec03240cfe26a117417fc"
+    },
+    {
+      "id": "cheer",
+      "title": "小喇叭加油",
+      "file": "cheer.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-035.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "b6f561f43f972ca435c673849330efeff78c884cc38028992f7db2601ed0fe41"
+    },
+    {
+      "id": "snack",
+      "title": "吃面包",
+      "file": "snack.webp",
+      "source": "https://github.com/lmy414/ai-girl-stickers/blob/e02992f2264178daf828b15b3132ef85ccdee7ee/dist/submissions/originals/deepseek/issue-32-023.webp",
+      "author": "1cyberlangke1",
+      "usage": "投稿者声明自行创作或生成，并在原投稿标注 CC0 公共领域；本地个人聊天使用。原声明：https://github.com/lmy414/ai-girl-stickers/issues/32",
+      "sha256": "a91c130dbbb3da2d2100788054b417306479919ef272ade06a129fb1d51bdebd"
+    }
+  ],
+  "attribution": {
+    "title": "蓝色大肥鱼 / DeepSeek娘社区表情",
+    "author": "1cyberlangke1（原投稿自述自行创作或生成）",
+    "curator": "lmy414 / 蓝色大肥鱼",
+    "repository": "https://github.com/lmy414/ai-girl-stickers",
+    "commit": "e02992f2264178daf828b15b3132ef85ccdee7ee",
+    "declaration": "https://github.com/lmy414/ai-girl-stickers/issues/32",
+    "declarationSummary": "原投稿的内容来源为 self-created，授权状态为 CC0，投稿者勾选确认有权提交；维护者确认73件逐图收录并保留CC0标记。",
+    "license": "CC0（按原投稿声明，不使用仓库MIT文字许可证替代图片授权）",
+    "licenseReference": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checkedAt": "2026-10-21",
+    "scope": "仅选择8张健康日常表情；固定提交原图，未修改位图；非官方同人，不宣称官方或自行创作。",
+    "rightsNote": "作者与授权按原投稿自述及档案逐图记录保留；CC0不授予第三方商标、角色设计或其他第三方权利。",
+    "details": [
+      {
+        "id": "happy",
+        "originalTitle": "〉ｗ〈",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230021.html"
+      },
+      {
+        "id": "thinking",
+        "originalTitle": "鲸鱼思考",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230076.html"
+      },
+      {
+        "id": "work",
+        "originalTitle": "上班",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230022.html"
+      },
+      {
+        "id": "rest",
+        "originalTitle": "趴着",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230070.html"
+      },
+      {
+        "id": "heart",
+        "originalTitle": "给心心",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230062.html"
+      },
+      {
+        "id": "goodnight",
+        "originalTitle": "晚安_亮",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230055.html"
+      },
+      {
+        "id": "cheer",
+        "originalTitle": "小喇叭",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230040.html"
+      },
+      {
+        "id": "snack",
+        "originalTitle": "吃面包",
+        "detail": "https://xn--pssy23gqgbz2d718b.com/works/deepseek202609230028.html"
+      }
+    ]
+  }
+}

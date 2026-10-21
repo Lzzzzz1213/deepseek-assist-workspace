@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lv-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>DeepSeek协助工作区</title>
+<link rel="stylesheet" href="/vendor/lanven-ui.tokens.css">
+<link rel="stylesheet" href="/vendor/lanven-ui.css">
+<link rel="stylesheet" href="/app.css">
+<link rel="stylesheet" href="/markdown.css">
+<link rel="stylesheet" href="/portrait.css">
+<link rel="stylesheet" href="/avatars.css">
+<link rel="stylesheet" href="/message-list.css">
+<link rel="stylesheet" href="/direct-chat.css">
+<script src="/vendor/markdown-it.min.js" defer></script>
+<script src="/markdown.js" defer></script>
+<script src="/avatars.js" defer></script>
+<script src="/message-list.js" defer></script>
+<script src="/app.js" defer></script>
+<script src="/direct-chat.js" defer></script>
+</head>
+<body data-lv-ui>
+
+<svg class="wr-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"></path><path d="M20 4.5v5h-5"></path></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6z"></path><path d="M9.2 12.2l2 2 3.6-3.8"></path></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M9 4h6"></path><path d="M6.5 7l.9 12a1.8 1.8 0 0 0 1.8 1.7h5.6a1.8 1.8 0 0 0 1.8-1.7L17.5 7"></path><path d="M10.5 11v6M13.5 11v6"></path></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></symbol>
+  <symbol id="i-chev-left" viewBox="0 0 24 24"><path d="M14.5 6L9 12l5.5 6"></path></symbol>
+  <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="M9.5 6L15 12l-5.5 6"></path></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"></path></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M6.5 13.5L12 19l5.5-5.5"></path></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"></rect><path d="M15 6.5V6a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 6.5V13a2 2 0 0 0 2 2h.5"></path></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2"></circle><path d="M3.5 19.5c.6-3 3-4.6 5.5-4.6s4.9 1.6 5.5 4.6"></path><path d="M16 8.2a3 3 0 0 1 0 5.6"></path><path d="M17.5 19.5c-.2-1.6-.7-2.9-1.5-3.9"></path></symbol>
+  <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M14.5 4.5v15"></path></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 7h12M8 12h12M8 17h12"></path><circle cx="4.5" cy="7" r="1.2"></circle><circle cx="4.5" cy="12" r="1.2"></circle><circle cx="4.5" cy="17" r="1.2"></circle></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12.5c0 3.9-3.6 7-8 7-1 0-2-.2-2.9-.5L4.5 20.5l1.2-3.4A6.6 6.6 0 0 1 4 12.5c0-3.9 3.6-7 8-7s8 3.1 8 7z"></path></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.5 3.5L6 13.2h5l-.8 7.3L18 10.8h-5z"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.8l4.4 4.4L19 7.5"></path></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.5l8.5 15h-17z"></path><path d="M12 10v4.5"></path><path d="M12 17.4h.01"></path></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3.5H7.5A2 2 0 0 0 5.5 5.5v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"></path><path d="M14 3.5V8h4.5"></path></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 7.5V12l3 2"></path></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M9 4.5L7.5 19.5M16.5 4.5L15 19.5M4.5 9h15M3.8 15h15"></path></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M4 7.5A2 2 0 0 1 6 5.5h3.2l1.8 2h7A2 2 0 0 1 20 9.5v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5l3-3"></path><path d="M9 15.5l-1.4 1.4a3.4 3.4 0 0 1-4.8-4.8L4.9 10"></path><path d="M15 8.5l1.4-1.4a3.4 3.4 0 0 1 4.8 4.8L19.1 14"></path></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8.2 8.2 0 1 0 20 14.5z"></path></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"></path></symbol>
+  <symbol id="i-tokens" viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="7" ry="3"></ellipse><path d="M5 7v10c0 1.7 3.1 3 7 3s7-1.3 7-3V7"></path><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"></path></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path><circle cx="12" cy="12" r="2.8"></circle></symbol>
+</svg>
+
+<div class="wr-app is-view-rooms" id="app">
+  <header class="wr-head">
+    <div class="wr-brand">
+      <span class="wr-mark" aria-hidden="true"><img class="wr-app-icon" src="/app-icon.png" alt="" width="48" height="48"></span>
+      <span class="wr-brand-txt"><b>DeepSeek协助工作区</b><span id="roomCount">正在连接…</span></span>
+    </div>
+    <div class="wr-head-right">
+      <button type="button" class="lv-ibtn" id="btnRoomSearch" aria-label="搜索群组" aria-expanded="false" aria-controls="roomSearchBar"><svg class="lv-ic" aria-hidden="true"><use href="#i-search"></use></svg></button>
+      <button type="button" class="lv-ibtn" popovertarget="appMenu" aria-label="更多选项"><svg class="lv-ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
+    </div>
+  </header>
+
+  <div class="wr-body">
+    <aside class="wr-col wr-col-rooms" aria-label="群组列表">
+      <div class="wr-col-hd">
+        <button type="button" id="btnPrivateChat" class="wr-private-entry" aria-label="和鲸鲸单独聊聊">
+          <img src="/avatars/deepseek.png" alt="" width="48" height="48">
+          <span><b>鲸鲸</b><small>来聊聊呀 · 记得我们聊过的事</small></span>
+          <svg class="lv-ic" aria-hidden="true"><use href="#i-chev-right"></use></svg>
+        </button>
+        <div class="wr-room-search" id="roomSearchBar" hidden>
+          <div class="lv-ctrl lv-search"><span class="lv-lead" aria-hidden="true"><svg class="lv-ic lv-sm"><use href="#i-search"></use></svg></span><input class="lv-input" id="roomSearch" type="search" placeholder="搜索群组或消息预览" aria-label="搜索群组" autocomplete="off" spellcheck="false"></div>
+        </div>
+        <div class="lv-seg wr-chat-tabs" role="group" aria-label="群组筛选">
+          <button type="button" data-room-filter="all" class="lv-on" aria-pressed="true">全部群聊</button>
+          <button type="button" data-room-filter="running" aria-pressed="false">进行中 <span class="lv-cnt" id="runningCount">0</span></button>
+        </div>
+      </div>
+      <div class="wr-scroll wr-rooms-scroll" id="roomScroll">
+        <ul class="wr-roomlist" id="roomList" aria-label="群组"></ul>
+        <p class="wr-note wr-center" id="roomListEmpty" hidden></p>
+      </div>
+      <footer class="wr-list-foot">
+        <span class="wr-conn" id="connPill" data-st="off"><span class="lv-dot" aria-hidden="true"></span><span id="connText">正在连接…</span><span id="connTime" hidden></span></span>
+        <span>DeepSeek协助工作区</span>
+      </footer>
+      <div hidden><span id="statRooms"></span><span id="statRuns"></span><span id="statRunning"></span><span id="statMessages"></span><span id="footDataDir"></span></div>
+    </aside>
+
+    <main class="wr-col wr-col-msgs" aria-label="群组消息">
+      <header class="wr-msgs-hd">
+        <div class="wr-msgs-hd-top">
+          <button type="button" class="lv-ibtn" id="btnBackRooms" aria-label="返回群组列表"><svg class="lv-ic" aria-hidden="true"><use href="#i-chev-left"></use></svg></button>
+          <div class="wr-title-block">
+            <h2 id="roomTitle">选择群聊</h2>
+            <div class="wr-chat-subtitle"><span class="wr-chat-state" id="roomStatusPill" data-st="off"><span id="roomStatusText">—</span></span><span>2 位协作者</span></div>
+            <span id="roomMetaMono" hidden></span>
+          </div>
+          <button type="button" class="lv-ibtn" id="btnMessageSearch" aria-label="搜索群消息" aria-expanded="false" aria-controls="chatSearchPanel"><svg class="lv-ic" aria-hidden="true"><use href="#i-search"></use></svg></button>
+          <button type="button" class="lv-ibtn" popovertarget="chatMenu" aria-label="群聊菜单"><svg class="lv-ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
+        </div>
+        <div class="wr-msgs-tools" id="chatSearchPanel" hidden>
+          <div class="lv-ctrl lv-search wr-msg-search"><span class="lv-lead" aria-hidden="true"><svg class="lv-ic lv-sm"><use href="#i-search"></use></svg></span><input class="lv-input" id="msgSearch" type="search" placeholder="搜索此群消息" aria-label="搜索群消息" autocomplete="off" spellcheck="false"></div>
+          <span class="lv-sel-wrap"><select class="lv-select" id="taskFilter" aria-label="按任务过滤消息"><option value="">全部任务</option></select><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          <button type="button" class="lv-btn lv-btn-ghost lv-btn-xs" id="btnClearFilters" hidden>清除</button>
+          <span class="wr-filter-info" id="filterInfo"></span>
+        </div>
+      </header>
+      <div class="wr-error lv-banner lv-danger" id="errorBanner" role="status" hidden><svg class="lv-ic" aria-hidden="true"><use href="#i-alert"></use></svg><span id="errorText">—</span><button type="button" class="lv-btn lv-btn-xs lv-btn-secondary" id="btnRetry">重试</button></div>
+      <div class="wr-msg-wrap" id="msgWrap">
+        <div class="wr-scroll wr-msg-scroll" id="msgScroll" tabindex="0" role="log" aria-label="群消息记录" aria-live="off">
+          <div class="wr-msgs" id="msgList"></div><p class="wr-note wr-center" id="msgEmpty" hidden></p><section class="wr-onboard" id="onboard" aria-label="开始使用说明" hidden></section>
+          <noscript><p class="wr-note wr-center">请启用 JavaScript 查看本机协作消息。</p></noscript>
+        </div>
+        <button type="button" class="wr-newmsg lv-btn lv-btn-primary lv-btn-sm" id="newMsgBtn" hidden><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-arrow-down"></use></svg><span id="newMsgText">回到最新</span></button>
+      </div>
+      <footer class="wr-foot"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-eye"></use></svg><span id="roomSync">正在同步协作消息…</span></footer>
+    </main>
+  </div>
+  <section id="privateChat" aria-label="与鲸鲸私聊" hidden></section>
+</div>
+
+<div class="wr-menu" id="appMenu" popover="auto" role="group" aria-label="应用选项">
+  <button type="button" id="btnRefresh"><svg class="lv-ic" aria-hidden="true"><use href="#i-refresh"></use></svg>刷新消息</button>
+  <button type="button" id="themeToggle" role="switch" aria-checked="false" aria-label="切换为深色主题"><svg class="lv-ic" aria-hidden="true"><use href="#i-moon"></use></svg><span id="themeLabel">深色模式</span></button>
+  <button type="button" id="btnPrivacy"><svg class="lv-ic" aria-hidden="true"><use href="#i-shield"></use></svg>隐私与数据</button>
+</div>
+<div class="wr-menu" id="chatMenu" popover="auto" role="group" aria-label="群聊操作">
+  <button type="button" id="btnRoomDetail"><svg class="lv-ic" aria-hidden="true"><use href="#i-users"></use></svg>群聊资料</button>
+  <button type="button" id="btnExport" aria-label="导出本群脱敏 JSON"><svg class="lv-ic" aria-hidden="true"><use href="#i-download"></use></svg>导出对话</button>
+  <button type="button" data-toggle-theme><svg class="lv-ic" aria-hidden="true"><use href="#i-moon"></use></svg>切换明暗主题</button>
+  <button type="button" data-open-privacy><svg class="lv-ic" aria-hidden="true"><use href="#i-shield"></use></svg>隐私说明</button>
+  <button type="button" class="wr-menu-danger" id="btnDeleteRoom"><svg class="lv-ic" aria-hidden="true"><use href="#i-trash"></use></svg>从客户端删除本群对话</button>
+</div>
+
+
+<dialog class="wr-dialog" id="dlgDelete" aria-labelledby="dlgDeleteTitle">
+  <div class="wr-dlg-head">
+    <span class="wr-dlg-ic wr-danger" aria-hidden="true"><svg class="lv-ic lv-lg"><use href="#i-trash"></use></svg></span>
+    <div>
+      <h3 id="dlgDeleteTitle">删除本群对话</h3>
+      <p id="dlgDeleteTarget">—</p>
+    </div>
+    <button type="button" class="lv-ibtn" data-close aria-label="关闭对话框" title="关闭"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="wr-dlg-body">
+    <p class="wr-dlg-warn">仅在客户端隐藏本群已有对话，不改写或删除 Codex 文件、项目源码或原始协作记录。重启后仍保持，后续新任务会继续显示；有运行中任务时暂不能删除。</p>
+    <div id="dlgDeleteDetail"></div>
+    <p class="lv-banner lv-warn wr-dlg-alert" id="dlgDeleteError" hidden>—</p>
+  </div>
+  <div class="wr-dlg-foot">
+    <button type="button" class="lv-btn lv-btn-secondary" data-close autofocus>取消</button>
+    <button type="button" class="lv-btn lv-btn-danger" id="btnDeleteConfirm">仅从客户端删除</button>
+  </div>
+</dialog>
+
+<dialog class="wr-dialog wr-dialog-lg" id="dlgRoom" aria-labelledby="dlgRoomTitle">
+  <div class="wr-dlg-head">
+    <span class="wr-dlg-ic" aria-hidden="true"><svg class="lv-ic lv-lg"><use href="#i-users"></use></svg></span>
+    <div>
+      <h3 id="dlgRoomTitle">群详情</h3>
+      <p>数据来自本机事件文件，字段缺失时显示“未记录”。</p>
+    </div>
+    <button type="button" class="lv-ibtn" data-close aria-label="关闭对话框" title="关闭"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="wr-dlg-body" id="roomDetailBody"></div>
+  <div class="wr-dlg-foot">
+    <button type="button" class="lv-btn lv-btn-ghost" data-close>关闭</button>
+    <button type="button" class="lv-btn lv-btn-primary" id="btnRoomDetailExport" aria-label="导出本群脱敏 JSON"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-download"></use></svg>导出脱敏 JSON</button>
+  </div>
+</dialog>
+
+<dialog class="wr-dialog" id="dlgPrivacy" aria-labelledby="dlgPrivacyTitle">
+  <div class="wr-dlg-head">
+    <span class="wr-dlg-ic" aria-hidden="true"><svg class="lv-ic lv-lg"><use href="#i-shield"></use></svg></span>
+    <div>
+      <h3 id="dlgPrivacyTitle">隐私说明</h3>
+      <p>工作观察、独立私聊与本地记忆</p>
+    </div>
+    <button type="button" class="lv-ibtn" data-close aria-label="关闭对话框" title="关闭"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="wr-dlg-body">
+    <ul>
+      <li>服务只监听 127.0.0.1，工作事件与私聊记忆保存在本机。主动发送私聊时，当前消息、相关记忆和有界公开工作摘要会发送给 DeepSeek。</li>
+      <li>需要联网资料时，仅用当前问题向 DeepSeek 官方搜索与网页读取接口查询，不把本地记忆或工作摘要用作搜索材料。主动消息可通过 Windows 系统通知提醒。</li>
+      <li>只展示专用委派入口主动写出的显式任务、公开回复（agent_message）与主审说明，不展示工具操作。</li>
+      <li>不读取其他 Codex 会话数据库、系统提示、reasoning 事件，也不读取其他聊天的私有历史。</li>
+      <li>服务端在写入与输出前会做密钥过滤：私钥块、sk- 令牌、Bearer 头以及 password / token / api_key / secret 赋值会被替换为 [REDACTED]。</li>
+      <li>所有文本按不可信纯文本渲染，不执行 HTML、脚本或命令，也不自动请求消息里的链接。</li>
+      <li>“从客户端删除本群对话”只保存客户端删除标记；原始记录只读，不改写或删除事件日志、项目源码或 Codex 原始协作记录。</li>
+      <li>“清空私聊”只清聊天区，保留本地记忆档案；私聊没有工作Agent工具或项目修改权限。密钥由本机进程安全读取，不进入浏览器或记忆。</li>
+      <li>本工具是个人本机观察工具，不代表 OpenAI 官方产品，也不构成任何官方认证、审核或背书；success 仅表示辅助调用结束，不等于主审通过。</li>
+    </ul>
+    <div class="wr-kv"><span class="wr-k">数据目录</span><span class="wr-v lv-mono" id="privacyDataDir">读取中…</span></div>
+    <div class="wr-kv"><span class="wr-k">读取方式</span><span class="wr-v lv-mono">GET /api/state · GET /api/rooms/&lt;id&gt; · 每 2 秒</span></div>
+    <div class="wr-kv"><span class="wr-k">写入能力</span><span class="wr-v">客户端隐藏标记及独立私聊/记忆；原始工作记录只读</span></div>
+  </div>
+  <div class="wr-dlg-foot">
+    <button type="button" class="lv-btn lv-btn-secondary" data-close>关闭</button>
+  </div>
+</dialog>
+
+<dialog class="wr-dialog" id="dlgCopy" aria-labelledby="dlgCopyTitle">
+  <div class="wr-dlg-head">
+    <span class="wr-dlg-ic" aria-hidden="true"><svg class="lv-ic lv-lg"><use href="#i-copy"></use></svg></span>
+    <div>
+      <h3 id="dlgCopyTitle">手动复制原文</h3>
+      <p id="dlgCopyHint">浏览器未提供剪贴板权限，请在下方选中文本后手动复制。</p>
+    </div>
+    <button type="button" class="lv-ibtn" data-close aria-label="关闭对话框" title="关闭"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="wr-dlg-body">
+    <label class="wr-vl" for="copyText">消息原文（纯文本）</label>
+    <textarea class="wr-copytxt" id="copyText" readonly spellcheck="false"></textarea>
+  </div>
+  <div class="wr-dlg-foot">
+    <button type="button" class="lv-btn lv-btn-secondary" data-close>关闭</button>
+    <button type="button" class="lv-btn lv-btn-primary" id="btnCopySelect">选中全部文本</button>
+  </div>
+</dialog>
+
+<dialog class="wr-dialog wr-profile-dialog" id="dlgProfile" aria-labelledby="dlgProfileTitle">
+  <div class="wr-dlg-head">
+    <div>
+      <h3 id="dlgProfileTitle">角色资料</h3>
+      <p>两位协作者的本地趣味档案</p>
+    </div>
+    <button type="button" class="lv-ibtn" data-close aria-label="关闭角色资料" title="关闭"><svg class="lv-ic lv-sm" aria-hidden="true"><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="wr-dlg-body">
+    <div class="wr-profile-hero">
+      <div class="wr-profile-figure" id="dlgProfileFigure">
+        <img class="wr-profile-photo" id="dlgProfilePhoto" src="/avatars/chatgpt.png" alt="龙龙 角色头像" width="128" height="128" decoding="async">
+        <span class="wr-profile-fallback" id="dlgProfileFallback" aria-hidden="true" hidden>CG</span>
+      </div>
+      <div class="wr-profile-identity">
+        <h4 id="dlgProfileName">龙龙</h4>
+        <p class="wr-profile-role-title" id="dlgProfileRoleTitle">主智能体 · 需求翻译官</p>
+        <p class="wr-profile-sign" id="dlgProfileSign">需求我来捋，收尾我来兜。</p>
+      </div>
+    </div>
+    <dl class="wr-profile-facts">
+      <div class="wr-profile-fact"><dt>简介</dt><dd id="dlgProfileIntro">擅长把“差点意思”翻译成下一步，碰到“顺手改一下”会先划清文件范围。</dd></div>
+      <div class="wr-profile-fact"><dt>分工</dt><dd id="dlgProfileDuty">拆分任务、分配文件、整合改动，负责最终审查和验证。</dd></div>
+      <div class="wr-profile-fact"><dt>爱好</dt><dd id="dlgProfileHobby">理顺乱麻、给待办打勾、在完成前再看一眼。</dd></div>
+    </dl>
+  </div>
+  <div class="wr-dlg-foot">
+    <span class="wr-profile-note">角色趣味设定 · 实际协作以任务记录为准</span>
+    <button type="button" class="lv-btn lv-btn-secondary" data-close>关闭</button>
+  </div>
+</dialog>
+
+<div class="wr-toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+</body>
+</html>

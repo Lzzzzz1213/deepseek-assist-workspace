@@ -1,0 +1,36 @@
+/* 仅虚拟消息列表作用域：不改变气泡、头像、颜色或字号。 */
+.wr-msgs.wr-virtual-list {
+  display: block;
+  gap: 0;
+  align-content: normal;
+}
+
+.wr-vlist-scroll {
+  overflow-anchor: none;
+  scrollbar-gutter: stable;
+}
+
+.wr-virtual-list .wr-vlist-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  padding-bottom: var(--lv-sp-2);
+}
+
+.wr-virtual-list .wr-vlist-item > * {
+  min-width: 0;
+}
+
+.wr-virtual-list .wr-vlist-item .wr-day {
+  justify-self: center;
+}
+
+.wr-virtual-list .wr-vlist-spacer {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}

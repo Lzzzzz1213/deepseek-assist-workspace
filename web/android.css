@@ -1,0 +1,112 @@
+/* ============================================================
+   DeepSeek协助工作区 · Android 应用外观层
+   交付目标：Windows 桌面客户端；此处只做 Android 风格外观，
+   不画手机外壳、不画假状态栏、不新增通知/任务/工具类结构。
+   加载顺序：vendor/lanven-ui.tokens.css → vendor/lanven-ui.css → app.css → 本文件。
+   约束：只用已有 --lv-* 语义变量（Prism 青蓝紫 + 七色光谱 + 冷白/靛蓝双主题）；
+        触区 48px；输入 48/56px；正文 16 / 辅助 14 / 小标签 12；圆角 16 / 22；
+        宽屏保留「列表-对话」双栏；不定义轻提示（toast）定位；不涉及已删除的任务栏与工具操作。
+   ============================================================ */
+
+/* ---------- 1. 基础排版与宽屏双栏 ---------- */
+body[data-lv-ui]{font-size:var(--lv-fs-16);line-height:1.6;background:var(--lv-bg)}
+body[data-lv-ui] .wr-body{grid-template-columns:336px minmax(0,1fr)}
+
+/* ---------- 2. 主顶栏：≥56px，玻璃底 + 光谱细线 ---------- */
+body[data-lv-ui] .wr-head{min-height:56px;padding:var(--lv-sp-2) var(--lv-sp-4);gap:var(--lv-sp-4);
+  border-bottom:1px solid var(--lv-border);background:var(--lv-surface-glass);backdrop-filter:blur(18px) saturate(1.4)}
+body[data-lv-ui] .wr-head::after{height:1px;opacity:.3}
+body[data-lv-ui] .wr-mark{width:40px;height:40px;border-radius:var(--lv-r-md)}
+body[data-lv-ui] .wr-head-right{gap:var(--lv-sp-1)}
+/* 图标按钮派生 48px 触区 */
+body[data-lv-ui] .wr-head .lv-ibtn,
+body[data-lv-ui] .wr-msgs-hd .lv-ibtn{width:48px;height:48px;border-radius:var(--lv-r-md)}
+body[data-lv-ui] .wr-head .lv-ibtn:hover,
+body[data-lv-ui] .wr-msgs-hd .lv-ibtn:hover{background:var(--lv-surface-3)}
+
+/* ---------- 3. 左栏：Android 消息列表观感（去厚边框、去多重卡片） ---------- */
+body[data-lv-ui] .wr-col-rooms{background:var(--lv-surface);border-right:1px solid var(--lv-border)}
+body[data-lv-ui] .wr-col-hd{padding:var(--lv-sp-3) var(--lv-sp-4) var(--lv-sp-2);gap:var(--lv-sp-2);
+  border-bottom:1px solid var(--lv-border);background:transparent}
+body[data-lv-ui] .wr-col-title h2{font-size:var(--lv-fs-18);font-weight:800}
+/* 搜索输入：48px 单行、16px 正文 */
+body[data-lv-ui] .wr-room-search .lv-input{height:48px;min-height:48px;font-size:var(--lv-fs-16);
+  background:var(--lv-surface-2);border-color:transparent}
+body[data-lv-ui] .wr-room-search .lv-input:hover{border-color:var(--lv-border-2)}
+body[data-lv-ui] .wr-rooms-scroll{padding:var(--lv-sp-2) var(--lv-sp-2) var(--lv-sp-3)}
+body[data-lv-ui] .wr-roomlist{gap:2px}
+body[data-lv-ui] .wr-room{padding:var(--lv-sp-3) var(--lv-sp-4);gap:2px;border:0;border-radius:var(--lv-r-lg);
+  background:transparent;box-shadow:none;transition:background var(--lv-dur-2) var(--lv-ease)}
+body[data-lv-ui] .wr-room:hover{background:var(--lv-surface-2);box-shadow:none}
+body[data-lv-ui] .wr-room-title{font-size:var(--lv-fs-16);font-weight:700}
+body[data-lv-ui] .wr-room-prev{font-size:var(--lv-fs-14);color:var(--lv-text-2)}
+/* 技术路径与统计弱化为辅助信息 */
+body[data-lv-ui] .wr-room-proj{font-size:var(--lv-fs-12);color:var(--lv-text-3);opacity:.75}
+body[data-lv-ui] .wr-room-foot{font-size:var(--lv-fs-12);color:var(--lv-text-3);gap:var(--lv-sp-1)}
+body[data-lv-ui] .wr-room-nums{color:var(--lv-text-3)}
+/* 选中项：柔和光谱渐变底 + 内描边，替代粗描边与发光环 */
+body[data-lv-ui] .wr-room.is-sel{background-color:var(--lv-surface-2);background-image:var(--lv-spectrum-soft);
+  border-color:transparent;box-shadow:inset 0 0 0 1px var(--lv-border-glow)}
+body[data-lv-ui] .wr-col-ft{padding:var(--lv-sp-3) var(--lv-sp-4);background:transparent;border-top:1px solid var(--lv-border)}
+body[data-lv-ui] .wr-stats dt{font-size:var(--lv-fs-12)}
+body[data-lv-ui] .wr-stats dd{font-size:var(--lv-fs-16);font-weight:700}
+body[data-lv-ui] .wr-foot-dir{font-size:var(--lv-fs-12);opacity:.85}
+
+/* ---------- 4. 会话头部 ---------- */
+body[data-lv-ui] .wr-msgs-hd{padding:var(--lv-sp-3) var(--lv-sp-4);gap:var(--lv-sp-3);
+  border-bottom:1px solid var(--lv-border);background:var(--lv-surface-glass);backdrop-filter:blur(18px) saturate(1.4)}
+body[data-lv-ui] .wr-title-row h2{font-size:var(--lv-fs-18);font-weight:800}
+body[data-lv-ui] .wr-member .lv-avatar{width:48px;height:48px;border-radius:var(--lv-r-lg);font-size:var(--lv-fs-14)}
+body[data-lv-ui] .wr-member-txt b{font-size:var(--lv-fs-14)}
+body[data-lv-ui] .wr-member-txt em,
+body[data-lv-ui] .wr-meta-row{font-size:var(--lv-fs-12)}
+/* 工具行控件同样按移动派生尺寸 */
+body[data-lv-ui] .wr-msgs-tools .lv-select,
+body[data-lv-ui] .wr-msgs-hd .lv-btn{height:48px;min-height:48px;font-size:var(--lv-fs-14);border-radius:var(--lv-r-md)}
+body[data-lv-ui] .wr-msgs-hd .lv-btn{padding:0 var(--lv-sp-4)}
+body[data-lv-ui] .wr-msg-search .lv-input{height:48px;min-height:48px;font-size:var(--lv-fs-16)}
+
+/* ---------- 5. 消息区与 22px 圆角气泡 ---------- */
+body[data-lv-ui] .wr-col-msgs{background:var(--lv-surface-2)}
+body[data-lv-ui] .wr-msg-scroll{padding:var(--lv-sp-5) var(--lv-sp-4)}
+body[data-lv-ui] .wr-msgs{gap:var(--lv-sp-4)}
+body[data-lv-ui] .wr-msg{gap:var(--lv-sp-3)}
+body[data-lv-ui] .wr-msg-side .lv-avatar{width:48px;height:48px;border-radius:var(--lv-r-lg);font-size:var(--lv-fs-14)}
+body[data-lv-ui] .wr-msg-run{font-size:var(--lv-fs-12)}
+body[data-lv-ui] .wr-bubble{padding:var(--lv-sp-3) var(--lv-sp-4);border:0;border-radius:var(--lv-r-xl);
+  background:var(--lv-surface);box-shadow:var(--lv-shadow-1);max-width:min(100%,760px)}
+body[data-lv-ui] .wr-bubble.wr-task{background:var(--lv-run-bg);box-shadow:none}
+body[data-lv-ui] .wr-bubble.wr-ds{background:var(--lv-surface)}
+body[data-lv-ui] .wr-bubble.wr-review{box-shadow:inset 0 0 0 1px var(--lv-border-2)}
+body[data-lv-ui] .wr-bubble-hd{margin-bottom:var(--lv-sp-1)}
+body[data-lv-ui] .wr-who-b{font-size:var(--lv-fs-14)}
+body[data-lv-ui] .wr-p{font-size:var(--lv-fs-16);line-height:1.75}
+body[data-lv-ui] .wr-chip{font-size:var(--lv-fs-12);height:var(--lv-h-xs)}
+body[data-lv-ui] .wr-time{font-size:var(--lv-fs-12)}
+body[data-lv-ui] .wr-copy{width:48px;height:48px;border-radius:var(--lv-r-md)}
+body[data-lv-ui] .wr-foot{font-size:var(--lv-fs-12)}
+
+/* ---------- 6. 弹层 ---------- */
+body[data-lv-ui] .wr-dialog{border-radius:var(--lv-r-xl)}
+body[data-lv-ui] .wr-dlg-body p,
+body[data-lv-ui] .wr-dlg-body ul{font-size:var(--lv-fs-14)}
+body[data-lv-ui] .wr-dlg-head .lv-ibtn{width:48px;height:48px;border-radius:var(--lv-r-md)}
+body[data-lv-ui] .wr-dlg-foot .lv-btn{min-height:48px;padding:0 var(--lv-sp-4);border-radius:var(--lv-r-md)}
+
+/* ---------- 7. 焦点可见与小屏 ---------- */
+body[data-lv-ui] .wr-room:focus-visible,
+body[data-lv-ui] .wr-msg-scroll:focus-visible{outline:2px solid var(--lv-brand);outline-offset:-2px}
+@media (max-width:1100px){
+  body[data-lv-ui] .wr-body{grid-template-columns:288px minmax(0,1fr)}
+}
+@media (max-width:760px){
+  /* 沿用 app.css 已有 760px 群组/消息单列切换；不强制手机窄宽，不产生横向溢出 */
+  body[data-lv-ui] .wr-body{grid-template-columns:minmax(0,1fr)}
+  body[data-lv-ui] .wr-msg-scroll{padding:var(--lv-sp-3)}
+}
+@media (prefers-reduced-motion:reduce){
+  body[data-lv-ui] .wr-room,
+  body[data-lv-ui] .wr-head,
+  body[data-lv-ui] .wr-msgs-hd,
+  body[data-lv-ui] .wr-bubble{transition:none}
+}

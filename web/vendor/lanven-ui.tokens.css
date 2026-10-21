@@ -1,0 +1,177 @@
+/* Lanven UI 0.1.0 · 用户认可的 Prism 色值，统一 --lv- 命名空间。 */
+/* ================================================================
+   Lanven UI ·「棱光 Prism Spectrum」公共设计令牌
+   来源：用户认可的 Space Bunny 视觉；命名空间 --lv-。
+   主题：<html data-lv-theme="light|dark">
+   ================================================================ */
+
+/* ---------- 1. 中性色阶 + 品牌 + 语义色（双主题） ---------- */
+:root, :root[data-lv-theme="light"], [data-lv-ui][data-lv-theme="light"]{
+  color-scheme:light;
+
+  /* 中性 */
+  --lv-bg:#EEF1F8;
+  --lv-bg-mesh-1:rgba(45,212,191,.20);
+  --lv-bg-mesh-2:rgba(167,139,250,.20);
+  --lv-bg-mesh-3:rgba(251,169,76,.16);
+  --lv-surface:#FFFFFF;
+  --lv-surface-2:#F6F8FD;
+  --lv-surface-3:#E9EEF8;
+  --lv-surface-glass:rgba(255,255,255,.72);
+  --lv-text-1:#0C1626;
+  --lv-text-2:#3E5068;
+  --lv-text-3:#7C8BA4;
+  --lv-text-inv:#FFFFFF;
+  --lv-border:#DFE6F2;
+  --lv-border-2:#C6D2E4;
+  --lv-border-glow:rgba(45,212,191,.34);
+
+  /* 品牌 —— 棱光七色光谱 */
+  --lv-brand:#0E9E92;
+  --lv-brand-2:#0284C7;
+  --lv-brand-3:#7C3AED;
+  --lv-brand-ink:#046A63;
+  --lv-btn-grad:linear-gradient(135deg,#0FB9A6 0%,#0891B2 48%,#7C3AED 100%);
+  --lv-btn-grad-hover:linear-gradient(135deg,#14CDB8 0%,#0AA0C8 48%,#8B5CF6 100%);
+  --lv-spectrum:linear-gradient(90deg,#2DD4BF 0%,#22D3EE 18%,#38BDF8 34%,#818CF8 56%,#C084FC 74%,#F472B6 92%,#FBA94C 100%);
+  --lv-spectrum-soft:linear-gradient(90deg,rgba(45,212,191,.16),rgba(56,189,248,.16),rgba(167,139,250,.16),rgba(251,169,76,.16));
+  --lv-ring:rgba(14,158,146,.26);
+
+  /* 枫橙 —— 唯一暖色，运营/更新/高载 */
+  --lv-maple:#B45309;
+  --lv-maple-bg:#FFEDD5;
+  --lv-maple-bd:#F7CE9B;
+  --lv-maple-glow:rgba(245,158,11,.35);
+
+  /* 语义 */
+  --lv-ok:#0B8A5F;      --lv-ok-bg:#D8F5E8;      --lv-ok-bd:#A3E3C6;
+  --lv-warn:#B45309;    --lv-warn-bg:#FDF0D8;    --lv-warn-bd:#F3DCAE;
+  --lv-danger:#DC2649;  --lv-danger-bg:#FDE5EA;  --lv-danger-bd:#F7BFCA;
+  --lv-info:#0369A1;    --lv-info-bg:#E0F1FE;    --lv-info-bd:#B7DDF8;
+  --lv-run:#6D28D9;     --lv-run-bg:#EEE7FE;     --lv-run-bd:#D2C2F7;
+  --lv-idle:#55657E;    --lv-idle-bg:#EAEFF7;    --lv-idle-bd:#D3DDEB;
+
+  /* 阴影 / 遮罩 / 玻璃 */
+  --lv-shadow-1:0 1px 2px rgba(12,22,38,.06),0 2px 6px rgba(12,22,38,.05);
+  --lv-shadow-2:0 8px 22px rgba(12,22,38,.10),0 2px 6px rgba(12,22,38,.05);
+  --lv-shadow-3:0 28px 70px rgba(12,22,38,.20);
+  --lv-shadow-glow:0 10px 30px rgba(8,145,178,.28);
+  --lv-overlay:rgba(14,22,38,.48);
+  --lv-hairline:linear-gradient(90deg,transparent,var(--lv-border-2) 18%,var(--lv-border-2) 82%,transparent);
+  --lv-sk-hl:rgba(255,255,255,.75);
+  --lv-scroll:#BFCBDD;
+}
+
+:root[data-lv-theme="dark"], [data-lv-ui][data-lv-theme="dark"]{
+  color-scheme:dark;
+
+  --lv-bg:#070B16;
+  --lv-bg-mesh-1:rgba(45,212,191,.14);
+  --lv-bg-mesh-2:rgba(167,139,250,.16);
+  --lv-bg-mesh-3:rgba(251,169,76,.09);
+  --lv-surface:#0F1626;
+  --lv-surface-2:#151E33;
+  --lv-surface-3:#1D2942;
+  --lv-surface-glass:rgba(15,22,38,.70);
+  --lv-text-1:#EAEFFA;
+  --lv-text-2:#A7B4CD;
+  --lv-text-3:#6C7B96;
+  --lv-text-inv:#08111E;
+  --lv-border:#222E49;
+  --lv-border-2:#33425F;
+  --lv-border-glow:rgba(45,212,191,.30);
+
+  --lv-brand:#2DD4BF;
+  --lv-brand-2:#38BDF8;
+  --lv-brand-3:#A78BFA;
+  --lv-brand-ink:#5EEAD4;
+  --lv-btn-grad:linear-gradient(135deg,#14C8B2 0%,#0EA5D8 48%,#8B5CF6 100%);
+  --lv-btn-grad-hover:linear-gradient(135deg,#2FE0C8 0%,#22C8F0 48%,#A78BFA 100%);
+  --lv-spectrum:linear-gradient(90deg,#2DD4BF 0%,#22D3EE 18%,#38BDF8 34%,#818CF8 56%,#C084FC 74%,#F472B6 92%,#FBA94C 100%);
+  --lv-spectrum-soft:linear-gradient(90deg,rgba(45,212,191,.14),rgba(56,189,248,.14),rgba(167,139,250,.14),rgba(251,169,76,.14));
+  --lv-ring:rgba(45,212,191,.30);
+
+  --lv-maple:#FBA94C;
+  --lv-maple-bg:rgba(251,169,76,.13);
+  --lv-maple-bd:rgba(251,169,76,.38);
+  --lv-maple-glow:rgba(251,169,76,.28);
+
+  --lv-ok:#34D399;      --lv-ok-bg:rgba(52,211,153,.13);      --lv-ok-bd:rgba(52,211,153,.38);
+  --lv-warn:#FBBF24;    --lv-warn-bg:rgba(251,191,36,.13);    --lv-warn-bd:rgba(251,191,36,.38);
+  --lv-danger:#FB7185;  --lv-danger-bg:rgba(251,113,133,.13);  --lv-danger-bd:rgba(251,113,133,.40);
+  --lv-info:#38BDF8;    --lv-info-bg:rgba(56,189,248,.13);    --lv-info-bd:rgba(56,189,248,.38);
+  --lv-run:#C084FC;     --lv-run-bg:rgba(192,132,252,.14);    --lv-run-bd:rgba(192,132,252,.40);
+  --lv-idle:#94A3B8;    --lv-idle-bg:rgba(148,163,184,.12);   --lv-idle-bd:rgba(148,163,184,.30);
+
+  --lv-shadow-1:0 1px 2px rgba(0,0,0,.5);
+  --lv-shadow-2:0 10px 30px rgba(0,0,0,.5);
+  --lv-shadow-3:0 30px 80px rgba(0,0,0,.62);
+  --lv-shadow-glow:0 10px 34px rgba(45,212,191,.24);
+  --lv-overlay:rgba(2,5,12,.68);
+  --lv-hairline:linear-gradient(90deg,transparent,var(--lv-border-2) 18%,var(--lv-border-2) 82%,transparent);
+  --lv-sk-hl:rgba(255,255,255,.07);
+  --lv-scroll:#28354F;
+}
+
+/* ---------- 2. 分域色（每个功能域一个色相，跨页不迷路） ---------- */
+:root{
+  --lv-d-host:#0EA5D8;   --lv-d-host-2:#38BDF8;   --lv-d-term:#10B981;   --lv-d-term-2:#34D399;
+  --lv-d-ai:#8B5CF6;    --lv-d-ai-2:#C084FC;     --lv-d-dev:#E879F9;    --lv-d-dev-2:#F0ABFC;
+  --lv-d-set:#6366F1;   --lv-d-set-2:#A5B4FC;    --lv-d-sec:#F43F5E;    --lv-d-sec-2:#FDA4AF;
+  --lv-d-upd:#F59E0B;   --lv-d-upd-2:#FCD34D;
+}
+
+/* ---------- 3. 资源指标固定色 ---------- */
+:root{
+  --lv-m-cpu-c:#22D3EE;  --lv-m-cpu-g:linear-gradient(90deg,#0891B2,#22D3EE);
+  --lv-m-mem-c:#A78BFA;  --lv-m-mem-g:linear-gradient(90deg,#7C3AED,#A78BFA);
+  --lv-m-disk-c:#FBA94C; --lv-m-disk-g:linear-gradient(90deg,#EA8A0B,#FCD34D);
+  --lv-m-net-c:#34D399;  --lv-m-net-g:linear-gradient(90deg,#059669,#34D399);
+  --lv-m-hot-c:#FB7185;  --lv-m-hot-g:linear-gradient(90deg,#E11D48,#FB7185);
+}
+
+/* ---------- 4. 终端恒暗（不随主题切换） ---------- */
+:root{
+  --lv-term-bg:#070C16;
+  --lv-term-panel:#0D1524;
+  --lv-term-bd:#1E2B44;
+  --lv-term-tx:#D9E4F5;
+  --lv-term-dim:#7E8FAD;
+  --lv-term-ok:#34D399;
+  --lv-term-cy:#5EEAD4;
+  --lv-term-bl:#93C5FD;
+  --lv-term-vi:#C4B5FD;
+  --lv-term-warn:#FBBF24;
+  --lv-term-u:#7DD3FC;
+}
+
+/* ---------- 5. 尺度 / 圆角 / 动效 / 字体 ---------- */
+:root{
+  --lv-font-sans:"MiSans","HarmonyOS Sans SC","PingFang SC","Microsoft YaHei UI",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lv-font-mono:"JetBrains Mono","Cascadia Code",ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+
+  --lv-fs-11:11px; --lv-fs-12:12px; --lv-fs-13:13px; --lv-fs-14:14px; --lv-fs-16:16px;
+  --lv-fs-18:18px; --lv-fs-22:22px; --lv-fs-28:28px; --lv-fs-36:36px; --lv-fs-44:44px;
+
+  --lv-sp-1:4px; --lv-sp-2:8px; --lv-sp-3:12px; --lv-sp-4:16px; --lv-sp-5:20px;
+  --lv-sp-6:24px; --lv-sp-8:32px; --lv-sp-10:40px; --lv-sp-12:48px;
+
+  --lv-r-xs:6px; --lv-r-sm:9px; --lv-r-md:12px; --lv-r-lg:16px; --lv-r-xl:22px; --lv-r-2xl:28px; --lv-r-full:999px;
+
+  --lv-h-xs:24px; --lv-h-sm:30px; --lv-h-md:36px; --lv-h-lg:44px;
+
+  --lv-dur-1:.12s; --lv-dur-2:.2s; --lv-dur-3:.32s;
+  --lv-ease:cubic-bezier(.16,1,.3,1);
+  --lv-ease-back:cubic-bezier(.34,1.56,.64,1);
+}
+
+@media (prefers-reduced-motion:reduce){
+  :where([data-lv-ui]) *,:where([data-lv-ui]) *::before,:where([data-lv-ui]) *::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+/* 默认导航配方补足来源组件所需变量，仍采用同一品牌与表面。 */
+:root,[data-lv-ui]{
+  --lv-brand-soft-bg:var(--lv-spectrum-soft);
+  --lv-nav-c:var(--lv-brand);
+  --lv-nav-bg:var(--lv-spectrum-soft);
+  --lv-nav-bd:var(--lv-border-glow);
+}

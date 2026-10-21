@@ -1,0 +1,479 @@
+/* ============================================================
+   DeepSeek协助工作区 · portrait.css
+   竖屏 Lanven UI Android / Prism 外观（最后加载，覆盖 app.css 的双栏与旧皮肤）。
+   仅迁移外观：单列骨架、轻玻璃顶栏、青蓝紫主渐变、冷白/靛蓝双主题；不生成顶部装饰条。
+   取值全部继承 vendor/lanven-ui.tokens.css 的公共 --lv-*，本文件不重定义公共令牌，
+   也不保留旧的单蓝顶栏 / 灰绿聊天底 / 绿色右气泡固定色。
+   代码与终端恒暗（--lv-term-*）；通知仍屏幕顶部居中；不新增导航、输入框或假数据。
+   ============================================================ */
+
+/* ---------- 1. 基础 ---------- */
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;overflow:hidden;overflow-x:hidden;max-width:100vw;overscroll-behavior:none;
+  background:var(--lv-bg);color:var(--lv-text-1);font-family:var(--lv-font-sans)}
+.wr-note{margin:0;font-size:var(--lv-fs-12);line-height:1.7;color:var(--lv-text-2)}
+.wr-note.wr-center{text-align:center;padding:var(--lv-sp-4) 0}
+.wr-dialog,.wr-dialog *,.wr-menu,.wr-menu *,.wr-toast,.wr-toast *{box-sizing:border-box}
+
+/* ---------- 2. 应用外壳：宽浏览器也保持竖屏单列 ---------- */
+.wr-app{
+  position:relative;display:grid;grid-template-rows:auto minmax(0,1fr);
+  width:100%;max-width:560px;margin:0 auto;
+  height:100vh;height:100dvh;min-height:0;overflow:hidden;
+  color:var(--lv-text-1);
+  background:
+    radial-gradient(58% 38% at 6% 0%,var(--lv-bg-mesh-1),transparent 70%),
+    radial-gradient(52% 34% at 94% 2%,var(--lv-bg-mesh-2),transparent 72%),
+    radial-gradient(46% 30% at 50% 100%,var(--lv-bg-mesh-3),transparent 70%),
+    var(--lv-bg);
+}
+/* 顶部不生成七色装饰条；列表页与聊天页保持同一干净外壳。 */
+@media (min-width:600px){.wr-app{border-inline:1px solid var(--lv-border)}}
+.wr-app.is-view-chat{grid-template-rows:minmax(0,1fr)}
+.wr-app.is-view-rooms .wr-head{display:flex}
+.wr-app.is-view-chat .wr-head{display:none}
+
+/* 单列骨架：显式压过 app.css 的双栏与旧侧栏 */
+.wr-body,.wr-app .wr-body,.wr-app.is-task-collapsed .wr-body{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  min-height:0;min-width:0;width:100%;max-width:100%;overflow:hidden}
+.wr-app .wr-col-rooms{display:flex}
+.wr-app .wr-col-msgs{display:none}
+.wr-app.is-view-rooms .wr-col-rooms{display:flex}
+.wr-app.is-view-chat .wr-col-rooms{display:none}
+.wr-app.is-view-chat .wr-col-msgs{display:flex}
+.wr-col-task,.wr-task-scrim,.wr-mview{display:none!important}
+.wr-col{display:flex;flex-direction:column;min-height:0;min-width:0}
+.wr-col-rooms,.wr-col-msgs{background:transparent;border-right:0}
+.wr-scroll{overflow:auto;overscroll-behavior:contain;min-height:0}
+
+/* ---------- 3. 列表头：轻玻璃 + 紧凑 64px ---------- */
+.wr-head{
+  position:relative;z-index:6;flex:none;
+  display:flex;align-items:center;gap:var(--lv-sp-2);min-height:64px;
+  padding:var(--lv-sp-2) var(--lv-sp-2) var(--lv-sp-2) var(--lv-sp-4);
+  background:var(--lv-surface);color:var(--lv-text-1);
+  border-bottom:1px solid var(--lv-border);
+  backdrop-filter:blur(16px) saturate(1.3)}
+.wr-head::after{display:none}
+.wr-brand{flex:1 1 auto;display:flex;align-items:center;gap:var(--lv-sp-3);min-width:0}
+.wr-mark{width:48px;height:48px;flex:none;border-radius:var(--lv-r-md);display:grid;place-items:center;
+  background:transparent;color:inherit;border:0;box-shadow:none;font-weight:800}
+.wr-app-icon{display:block;width:100%;height:100%;object-fit:contain}
+.wr-mark .lv-ic{width:20px;height:20px;stroke-width:1.8}
+.wr-brand-txt{display:grid;gap:2px;min-width:0}
+.wr-brand-txt b{font-size:var(--lv-fs-16);font-weight:800;letter-spacing:0;color:var(--lv-text-1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  .wr-brand-txt b{
+    background-image:var(--lv-btn-grad);
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent}
+}
+@media (forced-colors:active){
+  .wr-brand-txt b{
+    background:none;
+    background-clip:border-box;
+    -webkit-background-clip:border-box;
+    color:CanvasText;
+    -webkit-text-fill-color:CanvasText}
+}
+.wr-brand-txt span{font-size:var(--lv-fs-12);color:var(--lv-text-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-head-right{margin-left:auto;flex:none;display:flex;align-items:center;gap:2px;min-width:0}
+.wr-head .lv-ibtn,.wr-msgs-hd-top .lv-ibtn{
+  width:48px;height:48px;flex:none;border:0;border-radius:var(--lv-r-md);
+  background:transparent;color:var(--lv-text-2);
+  transition:background var(--lv-dur-1) var(--lv-ease),color var(--lv-dur-1) var(--lv-ease)}
+.wr-head .lv-ibtn:hover,.wr-msgs-hd-top .lv-ibtn:hover{
+  background:var(--lv-surface-3);color:var(--lv-brand-ink);border-color:transparent}
+.wr-head .lv-ibtn:disabled,.wr-msgs-hd-top .lv-ibtn:disabled{opacity:.4;cursor:not-allowed}
+.wr-head .lv-ibtn:focus-visible,.wr-msgs-hd-top .lv-ibtn:focus-visible,
+.wr-chat-tabs button:focus-visible,.wr-room:focus-visible,.wr-copy:focus-visible,
+.wr-menu button:focus-visible,.wr-newmsg:focus-visible,.wr-dlg-head .lv-ibtn:focus-visible,
+.wr-dlg-foot .lv-btn:focus-visible,.wr-msgs-tools .lv-btn-ghost:focus-visible{
+  outline:2px solid var(--lv-brand);outline-offset:2px}
+
+/* ---------- 4. 搜索与筛选：Lanven 移动分段控件 ---------- */
+.wr-col-hd{flex:none;display:grid;gap:var(--lv-sp-2);
+  padding:var(--lv-sp-3) var(--lv-sp-3) var(--lv-sp-2);
+  background:transparent;border-bottom:1px solid var(--lv-border)}
+.wr-room-search{padding:0}
+.wr-room-search .lv-ctrl,.wr-msgs-tools .lv-ctrl{min-height:56px}
+/* 输入本身保留边框和焦点环，避免与公共 lv-ctrl 的外层重复。 */
+.wr-room-search .lv-input,.wr-msgs-tools .lv-input{
+  height:56px;min-height:56px;padding-left:40px;
+  border:1px solid var(--lv-border-2);border-radius:var(--lv-r-md);
+  font-size:var(--lv-fs-16);background:var(--lv-surface);color:var(--lv-text-1)}
+.wr-room-search .lv-input::placeholder,.wr-msgs-tools .lv-input::placeholder{color:var(--lv-text-3)}
+.wr-chat-tabs,.wr-app .wr-chat-tabs{
+  display:flex;gap:var(--lv-sp-1);width:100%;padding:var(--lv-sp-1);
+  border:0;border-radius:var(--lv-r-md);background:var(--lv-surface-3)}
+.wr-app .wr-chat-tabs button{
+  flex:1 1 0;min-width:0;height:48px;min-height:48px;padding:0 var(--lv-sp-3);
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:0;border-radius:var(--lv-r-sm);background:transparent;box-shadow:none;
+  color:var(--lv-text-2);font-family:inherit;font-size:var(--lv-fs-14);font-weight:700;
+  text-align:center;cursor:pointer;
+  transition:background var(--lv-dur-1) var(--lv-ease),color var(--lv-dur-1) var(--lv-ease)}
+.wr-app .wr-chat-tabs button:hover{background:var(--lv-surface-2);color:var(--lv-text-1)}
+.wr-app .wr-chat-tabs button.lv-on{background:var(--lv-surface);color:var(--lv-brand-ink);box-shadow:var(--lv-shadow-1)}
+.wr-app .wr-chat-tabs button.lv-on::after{display:none}
+.wr-app .wr-chat-tabs button .lv-cnt{font-family:inherit;font-size:var(--lv-fs-12);opacity:.8;margin-left:0}
+
+/* ---------- 5. 群组列表：无群头像的圆角卡片 + 完整选中边框 ---------- */
+.wr-rooms-scroll{flex:1;min-height:0;display:grid;gap:var(--lv-sp-2);align-content:start;
+  padding:var(--lv-sp-3);overflow:auto;overscroll-behavior:contain}
+.wr-roomlist{margin:0;padding:0;list-style:none;display:grid;gap:var(--lv-sp-2)}
+.wr-roomlist>li{margin:0;padding:0;list-style:none}
+.wr-room{
+  position:relative;display:flex;align-items:center;gap:var(--lv-sp-3);width:100%;min-height:72px;
+  padding:var(--lv-sp-3);text-align:left;font-family:inherit;cursor:pointer;
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-md);
+  background:var(--lv-surface);color:var(--lv-text-1);box-shadow:var(--lv-shadow-1);
+  transition:border-color var(--lv-dur-1) var(--lv-ease),box-shadow var(--lv-dur-1) var(--lv-ease),
+    background var(--lv-dur-1) var(--lv-ease)}
+.wr-room::after{display:none}
+.wr-room:hover{border-color:var(--lv-border-glow);box-shadow:0 0 0 1px var(--lv-border-glow)}
+.wr-room.is-sel{border-color:var(--lv-border-glow);background:var(--lv-surface);
+  box-shadow:0 0 0 3px var(--lv-ring)}
+.wr-room-content{flex:1 1 auto;min-width:0;display:grid;gap:2px}
+.wr-room-top{display:flex;align-items:baseline;gap:var(--lv-sp-2);min-width:0}
+.wr-room-title{flex:1 1 auto;min-width:0;font-size:var(--lv-fs-16);font-weight:700;color:var(--lv-text-1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-room-time{flex:none;margin-left:auto;font-size:var(--lv-fs-12);color:var(--lv-text-3);white-space:nowrap}
+.wr-room-bottom{display:flex;align-items:center;gap:var(--lv-sp-2);min-width:0}
+.wr-room-prev{flex:1 1 auto;min-width:0;display:block;font-size:var(--lv-fs-14);line-height:1.5;
+  color:var(--lv-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-room-activity{flex:none;display:inline-flex;align-items:center;height:22px;padding:0 var(--lv-sp-2);
+  border:1px solid var(--lv-run-bd);border-radius:var(--lv-r-full);
+  background:var(--lv-run-bg);color:var(--lv-run);
+  font-size:var(--lv-fs-12);font-weight:700;white-space:nowrap}
+.wr-room-proj,.wr-room-foot,.wr-room-nums{font-size:var(--lv-fs-12);color:var(--lv-text-3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 角色头像圆角方形；群列表与聊天头已无群头像，头像样式仅用于消息侧角色。 */
+.wr-room-avatar{width:48px;height:48px;flex:none;border-radius:var(--lv-r-md);display:grid;place-items:center;
+  background:var(--lv-spectrum-soft);color:var(--lv-brand-ink);border:1px solid var(--lv-border-glow);
+  font-size:var(--lv-fs-16);font-weight:800;overflow:hidden;box-shadow:none;user-select:none}
+.wr-msg-side :is(.lv-avatar,.wr-avatar,.wr-room-avatar){border-radius:var(--lv-r-sm)}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-0{background:var(--lv-btn-grad);border-color:transparent;color:#fff}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-1{background:var(--lv-run-bg);border-color:var(--lv-run-bd);color:var(--lv-run)}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-2{background:var(--lv-maple-bg);border-color:var(--lv-maple-bd);color:var(--lv-maple)}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-3{background:var(--lv-info-bg);border-color:var(--lv-info-bd);color:var(--lv-info)}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-4{background:var(--lv-ok-bg);border-color:var(--lv-ok-bd);color:var(--lv-ok)}
+:is(.wr-room-avatar,.lv-avatar,.wr-avatar).wr-avatar-5{background:var(--lv-spectrum-soft);border-color:var(--lv-border-glow);color:var(--lv-brand-ink)}
+
+/* 列表底栏：一行连接状态 + 来源标识 */
+.wr-list-foot{flex:none;display:flex;align-items:center;gap:var(--lv-sp-2);justify-content:space-between;
+  padding:var(--lv-sp-2) var(--lv-sp-4);border-top:1px solid var(--lv-border);
+  background:var(--lv-surface-glass);backdrop-filter:blur(12px);
+  font-size:var(--lv-fs-12);color:var(--lv-text-3)}
+.wr-conn{display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:64%;overflow:hidden}
+.wr-conn .lv-dot{width:8px;height:8px;flex:none;border:0;border-radius:var(--lv-r-full);background:var(--lv-text-3)}
+.wr-conn[data-st="ok"] .lv-dot{background:var(--lv-ok)}
+.wr-conn[data-st="warn"] .lv-dot{background:var(--lv-warn)}
+.wr-conn[data-st="err"] .lv-dot{background:var(--lv-danger)}
+.wr-conn[data-st="off"] .lv-dot{background:var(--lv-text-3)}
+.wr-conn>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wr-conn .wr-conn-time{font-size:var(--lv-fs-12);opacity:.75}
+.wr-list-foot>span:last-child{flex:none;color:var(--lv-text-3);white-space:nowrap}
+
+/* ---------- 6. 聊天头：64px 轻玻璃，337px 宽时标题省略 ---------- */
+.wr-msgs-hd{flex:none;display:block;padding:0;
+  background:var(--lv-surface);color:var(--lv-text-1);
+  border-bottom:1px solid var(--lv-border);backdrop-filter:blur(16px) saturate(1.3);box-shadow:none}
+.wr-msgs-hd-top{display:flex;align-items:center;gap:2px;min-width:0;min-height:64px;
+  padding:var(--lv-sp-2) var(--lv-sp-2) var(--lv-sp-2) 0}
+.wr-chat-avatar.wr-room-avatar{width:40px;height:40px;margin-right:var(--lv-sp-2);
+  font-size:var(--lv-fs-14);flex:none}
+.wr-title-block{flex:1 1 auto;min-width:0;display:grid;gap:2px}
+.wr-title-block h2{min-width:0;font-size:var(--lv-fs-16);font-weight:800;letter-spacing:0;
+  color:var(--lv-text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}
+.wr-chat-subtitle{display:flex;align-items:center;gap:var(--lv-sp-2);min-width:0;
+  font-size:var(--lv-fs-12);color:var(--lv-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-chat-state{display:inline-flex;align-items:center;flex:none}
+.wr-chat-state::before{content:"";width:7px;height:7px;margin-right:6px;
+  border-radius:var(--lv-r-full);background:currentColor}
+.wr-chat-state::after{content:"·";margin-left:var(--lv-sp-2);color:var(--lv-text-3);opacity:.8}
+.wr-chat-state[data-st="off"]{color:var(--lv-text-3)}
+.wr-chat-state[data-st="ok"]{color:var(--lv-ok)}
+.wr-chat-state[data-st="run"]{color:var(--lv-run)}
+.wr-chat-state[data-st="warn"]{color:var(--lv-warn)}
+.wr-chat-state[data-st="err"]{color:var(--lv-danger)}
+#roomMetaMono{font-size:var(--lv-fs-12);color:var(--lv-text-3);
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* 展开的搜索 / 筛选：浅色面，不用蓝底 */
+.wr-msgs-tools{display:flex;flex-wrap:wrap;align-items:center;gap:var(--lv-sp-2);
+  padding:var(--lv-sp-2) var(--lv-sp-3) var(--lv-sp-3);
+  background:var(--lv-surface-2);border-top:1px solid var(--lv-border)}
+.wr-msgs-tools .wr-msg-search{flex:1 1 100%;width:auto;min-width:0}
+.wr-msgs-tools .lv-sel-wrap{flex:0 1 auto;min-width:0;max-width:62%}
+.wr-msgs-tools .lv-select{width:100%;max-width:100%;min-height:48px;font-size:var(--lv-fs-14)}
+.wr-msgs-tools .lv-btn-ghost{flex:none;color:var(--lv-brand-ink);background:var(--lv-surface);
+  border:1px solid var(--lv-border-2);min-height:48px}
+.wr-msgs-tools .lv-btn-ghost:hover{background:var(--lv-spectrum-soft);
+  border-color:var(--lv-border-glow);color:var(--lv-brand-ink)}
+.wr-filter-info{flex:1 1 100%;min-width:0;font-size:var(--lv-fs-12);color:var(--lv-text-2);
+  overflow:hidden;text-overflow:ellipsis}
+.wr-error{display:flex;align-items:center;gap:var(--lv-sp-2);flex:none;
+  margin:var(--lv-sp-2) var(--lv-sp-3) 0;max-width:calc(100% - 24px)}
+
+/* ---------- 7. 消息区：Codex 右 / DeepSeek 左 ---------- */
+.wr-msg-wrap{position:relative;flex:1;min-height:0;display:flex;background:transparent}
+.wr-msg-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;
+  padding:var(--lv-sp-3) var(--lv-sp-3) var(--lv-sp-4);overflow-anchor:none}
+.wr-msgs{display:grid;gap:var(--lv-sp-2);align-content:start;width:100%;max-width:none;margin:0}
+.wr-day{justify-self:center;margin:var(--lv-sp-2) auto;padding:3px var(--lv-sp-3);
+  border-radius:var(--lv-r-full);background:var(--lv-surface-3);color:var(--lv-text-2);
+  font-size:var(--lv-fs-12);font-weight:700}
+.wr-sys{color:var(--lv-text-3)}
+.wr-sys-line{background:var(--lv-hairline)}
+.wr-sys-txt{display:inline-flex;align-items:center;gap:4px;padding:3px var(--lv-sp-3);
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-full);
+  background:var(--lv-surface-2);color:var(--lv-text-2);
+  font-size:var(--lv-fs-12);font-weight:700;white-space:nowrap;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis}
+
+.wr-msg{display:flex;align-items:flex-end;gap:var(--lv-sp-2);min-width:0;max-width:100%}
+.wr-msg-in{justify-content:flex-start}
+.wr-msg-out{flex-direction:row-reverse;justify-content:flex-start}
+.wr-msg-out .wr-msg-side{display:none}
+/* 头像固定在消息顶部，展开气泡时不随底边跳动。 */
+.wr-msg-side{display:grid;place-items:center;flex:none;align-self:flex-start}
+.wr-msg-side>:is(.lv-avatar,.wr-room-avatar,.wr-avatar){width:28px;height:28px;
+  font-size:var(--lv-fs-12);border-radius:var(--lv-r-sm);box-shadow:none}
+.wr-msg-side .lv-avatar.lv-ai{background:linear-gradient(135deg,var(--lv-d-ai),var(--lv-d-ai-2));color:#fff}
+.wr-msg-body{display:grid;gap:4px;min-width:0;max-width:92%}
+.wr-msg-in .wr-msg-body{justify-items:start}
+.wr-msg-out .wr-msg-body{justify-items:end;max-width:88%}
+.wr-msg-run{font-family:var(--lv-font-mono);font-size:var(--lv-fs-11);color:var(--lv-text-3)}
+
+.wr-bubble{max-width:100%;min-width:0;padding:var(--lv-sp-2) var(--lv-sp-3) var(--lv-sp-1);
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-lg);
+  background:var(--lv-surface);color:var(--lv-text-1);
+  box-shadow:var(--lv-shadow-1);overflow-wrap:anywhere}
+.wr-msg-in .wr-bubble{border-bottom-left-radius:var(--lv-r-xs)}
+.wr-msg-out .wr-bubble{border-bottom-right-radius:var(--lv-r-xs)}
+/* Codex（右）：轻青蓝语义面 */
+.wr-app .wr-msg-out .wr-bubble{background:var(--lv-info-bg);border-color:var(--lv-info-bd)}
+/* 任务消息：青蓝面（覆盖 app.css 的紫色旧值） */
+.wr-app .wr-bubble.wr-task{background:var(--lv-info-bg);border-color:var(--lv-info-bd);border-style:solid}
+/* DeepSeek（左）：白 / 靛蓝面 + AI 紫身份色 */
+.wr-app .wr-bubble.wr-ds{background:var(--lv-surface);border-color:var(--lv-run-bd);border-style:solid}
+/* 主审：中性浅色面 */
+.wr-app .wr-bubble.wr-review{background:var(--lv-surface-2);border-style:solid}
+.wr-app .wr-msg-out .wr-bubble .wr-who-b{color:var(--lv-info)}
+.wr-app .wr-msg-in .wr-bubble .wr-who-b{color:var(--lv-run)}
+.wr-bubble-hd{display:flex;align-items:center;gap:var(--lv-sp-2);flex-wrap:wrap;margin:0 0 2px}
+.wr-who-b{font-size:var(--lv-fs-14);font-weight:800}
+/* 身份碎标签保持隐藏；其他真实状态标签（如 lv-badge 胶囊）不隐藏 */
+.wr-chip,.wr-chip-task,.wr-chip-ds{display:none}
+.wr-bubble-hd .lv-badge{display:inline-flex}
+.wr-bubble-bd{display:grid;gap:var(--lv-sp-2);min-width:0}
+.wr-bubble-ft{display:flex;align-items:center;justify-content:flex-end;gap:var(--lv-sp-1);
+  margin-top:2px;min-height:22px}
+.wr-time{font-size:var(--lv-fs-12);color:var(--lv-text-3);white-space:nowrap}
+.wr-copy{width:48px;height:48px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  border:0;border-radius:var(--lv-r-sm);background:transparent;color:var(--lv-text-3);cursor:pointer;
+  transition:background var(--lv-dur-1) var(--lv-ease),color var(--lv-dur-1) var(--lv-ease)}
+.wr-copy .lv-ic{width:18px;height:18px}
+.wr-copy:hover{background:var(--lv-surface-3);color:var(--lv-brand-ink)}
+.wr-copy:disabled{opacity:.4;cursor:not-allowed}
+.wr-more{justify-self:start;display:inline-flex;align-items:center;gap:6px;height:var(--lv-h-sm);min-height:var(--lv-h-sm);
+  padding:0 var(--lv-sp-1);border-radius:var(--lv-r-xs);border:0;box-shadow:none;
+  background:transparent;color:var(--lv-brand-ink);font-size:var(--lv-fs-12);font-weight:600;line-height:1.4}
+.wr-more::after{content:"";width:6px;height:6px;flex:none;margin:0 2px 3px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.wr-more[aria-expanded="true"]::after{transform:rotate(225deg);margin-bottom:0;margin-top:3px}
+.wr-more:hover{background:var(--lv-spectrum-soft);color:var(--lv-brand-ink)}
+.wr-more:focus-visible{outline:2px solid var(--lv-brand);outline-offset:2px}
+.wr-p,.wr-plain{margin:0;font-size:var(--lv-fs-14);line-height:1.6;
+  color:var(--lv-text-1);white-space:pre-wrap;overflow-wrap:anywhere}
+.wr-goal{display:grid;gap:var(--lv-sp-2);padding:var(--lv-sp-3);max-height:280px;overflow:auto;
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-md);background:var(--lv-surface-2)}
+/* 代码恒暗，宽内容只局部滚动 */
+.wr-code{max-width:100%;padding:var(--lv-sp-3);border:1px solid var(--lv-term-bd);
+  border-radius:var(--lv-r-md);background:var(--lv-term-bg);color:var(--lv-term-tx);
+  font-family:var(--lv-font-mono);font-size:var(--lv-fs-13);line-height:1.7;
+  white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:auto}
+.wr-tool{border:1px solid var(--lv-border);border-radius:var(--lv-r-md);
+  background:var(--lv-surface-2);overflow:hidden}
+.wr-tool-hd{display:flex;align-items:center;gap:var(--lv-sp-2);width:100%;
+  padding:var(--lv-sp-2) var(--lv-sp-3);border:0;background:transparent;color:var(--lv-text-2);
+  font-family:inherit;font-size:var(--lv-fs-12);text-align:left;cursor:pointer}
+.wr-tool-hd:hover{background:var(--lv-surface-3);color:var(--lv-text-1)}
+.wr-tool-body{display:grid;gap:var(--lv-sp-2);padding:var(--lv-sp-3);
+  border-top:1px solid var(--lv-border)}
+
+/* 聊天底栏：仅一行轻量同步状态，不模拟输入框 */
+.wr-foot{flex:none;display:flex;align-items:center;gap:var(--lv-sp-2);
+  padding:var(--lv-sp-2) var(--lv-sp-3);border-top:1px solid var(--lv-border);
+  background:var(--lv-surface-glass);backdrop-filter:blur(12px);
+  font-size:var(--lv-fs-12);color:var(--lv-text-2)}
+.wr-foot .lv-ic{flex:none;color:var(--lv-text-3)}
+#roomSync{flex:1 1 auto;min-width:0;line-height:1.5;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.wr-newmsg{position:absolute;right:var(--lv-sp-3);bottom:var(--lv-sp-3);left:auto;transform:none;z-index:5;
+  display:inline-flex;align-items:center;gap:6px;height:48px;min-height:48px;padding:0 var(--lv-sp-4);
+  border:0;border-radius:var(--lv-r-full);background:var(--lv-btn-grad);color:#fff;
+  font-size:var(--lv-fs-14);font-weight:700;box-shadow:var(--lv-shadow-glow)}
+.wr-newmsg:hover{background:var(--lv-btn-grad-hover);color:#fff;filter:none}
+
+/* ---------- 8. 顶部菜单：原生 popover，关闭时保持原生隐藏 ---------- */
+.wr-menu{position:fixed;inset:auto;top:64px;left:auto;bottom:auto;
+  right:max(var(--lv-sp-2),calc((100vw - 560px) / 2 + var(--lv-sp-2)));
+  width:232px;max-width:calc(100vw - 16px);max-height:calc(100vh - 76px);
+  margin:0;padding:var(--lv-sp-1);overflow:auto;
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-md);
+  background:var(--lv-surface);color:var(--lv-text-1);box-shadow:var(--lv-shadow-3)}
+.wr-menu:popover-open{display:grid;gap:2px}
+.wr-menu button{display:flex;align-items:center;gap:var(--lv-sp-3);width:100%;
+  min-height:48px;padding:0 var(--lv-sp-3);border:0;border-radius:var(--lv-r-sm);
+  background:transparent;color:var(--lv-text-1);font-family:inherit;
+  font-size:var(--lv-fs-14);font-weight:600;text-align:left;cursor:pointer;
+  transition:background var(--lv-dur-1) var(--lv-ease)}
+.wr-menu button .lv-ic{width:20px;height:20px;flex:none;color:var(--lv-text-2)}
+.wr-menu button:hover{background:var(--lv-surface-3)}
+.wr-menu button:hover .lv-ic{color:var(--lv-brand-ink)}
+.wr-menu button:disabled{opacity:.4;cursor:not-allowed;background:transparent}
+.wr-menu button[role="switch"][aria-checked="true"]{color:var(--lv-brand-ink)}
+.wr-menu button[role="switch"][aria-checked="true"] .lv-ic{color:var(--lv-brand)}
+.wr-menu button.wr-menu-danger{color:var(--lv-danger)}
+.wr-menu button.wr-menu-danger .lv-ic{color:var(--lv-danger)}
+.wr-menu button.wr-menu-danger:hover{background:var(--lv-danger-bg)}
+
+/* ---------- 9. 对话框：22 圆角、body 可滚动、closed 不显示 ---------- */
+.wr-dialog{width:min(420px,94vw);max-width:94vw;max-height:88vh;padding:0;
+  border:1px solid var(--lv-border);border-radius:var(--lv-r-xl);
+  background:var(--lv-surface);color:var(--lv-text-1);
+  box-shadow:var(--lv-shadow-3);overflow:hidden}
+.wr-dialog.wr-dialog-lg{width:min(480px,94vw)}
+.wr-dialog[open]{display:flex;flex-direction:column}
+.wr-dialog::backdrop{background:var(--lv-overlay)}
+.wr-dlg-head{flex:none;display:flex;align-items:flex-start;gap:var(--lv-sp-3);
+  padding:var(--lv-sp-4) var(--lv-sp-4) 0}
+.wr-dlg-ic{width:44px;height:44px;flex:none;border-radius:var(--lv-r-md);display:grid;place-items:center;
+  background:var(--lv-spectrum-soft);color:var(--lv-brand-ink);border:1px solid var(--lv-border-glow)}
+.wr-dlg-ic.wr-danger{background:var(--lv-danger-bg);color:var(--lv-danger);border-color:var(--lv-danger-bd)}
+.wr-dlg-head>div{min-width:0}
+.wr-dlg-head h3{font-size:var(--lv-fs-16);font-weight:800;letter-spacing:0;color:var(--lv-text-1)}
+.wr-dlg-head p{margin:4px 0 0;font-size:var(--lv-fs-12);color:var(--lv-text-2);overflow-wrap:anywhere}
+.wr-dlg-head .lv-ibtn{margin-left:auto;flex:none;width:48px;height:48px;
+  border:0;border-radius:var(--lv-r-md);background:transparent;color:var(--lv-text-2)}
+.wr-dlg-head .lv-ibtn:hover{background:var(--lv-surface-3);color:var(--lv-text-1)}
+.wr-dlg-body{flex:1 1 auto;min-height:0;max-width:100%;overflow:auto;overflow-wrap:anywhere;
+  display:grid;gap:var(--lv-sp-3);padding:var(--lv-sp-3) var(--lv-sp-4)}
+.wr-dlg-body p{margin:0;font-size:var(--lv-fs-14);line-height:1.7;color:var(--lv-text-2)}
+.wr-dlg-body ul{margin:0;padding-left:var(--lv-sp-5);display:grid;gap:4px;
+  font-size:var(--lv-fs-14);line-height:1.7;color:var(--lv-text-2)}
+.wr-dlg-warn{color:var(--lv-warn)}
+.wr-dlg-sub{font-size:var(--lv-fs-14);font-weight:800;color:var(--lv-text-1)}
+.wr-dlg-alert{display:flex;align-items:center;gap:var(--lv-sp-2);margin:0}
+.wr-dlg-foot{flex:none;display:flex;align-items:center;justify-content:flex-end;
+  gap:var(--lv-sp-2);flex-wrap:wrap;padding:var(--lv-sp-3) var(--lv-sp-4);
+  border-top:1px solid var(--lv-border);background:var(--lv-surface-2)}
+.wr-dlg-foot .lv-btn{min-height:48px;max-width:100%;border-radius:var(--lv-r-md);font-weight:700}
+.wr-dlg-foot .lv-btn-primary,.wr-dlg-body .lv-btn-primary{
+  background:var(--lv-btn-grad);color:#fff;border-color:transparent;box-shadow:var(--lv-shadow-glow)}
+.wr-dlg-foot .lv-btn-primary:hover,.wr-dlg-body .lv-btn-primary:hover{
+  background:var(--lv-btn-grad-hover);color:#fff;filter:none}
+.wr-dlg-foot .lv-btn-danger{background:var(--lv-danger-bg);color:var(--lv-danger);
+  border:1px solid var(--lv-danger-bd);box-shadow:none}
+.wr-dlg-foot .lv-btn-danger:hover{background:var(--lv-danger-bg);color:var(--lv-danger);filter:brightness(.97)}
+.wr-dlg-foot .lv-btn-secondary,.wr-dlg-foot .lv-btn-ghost{
+  background:transparent;border:1px solid var(--lv-border-2);color:var(--lv-text-1);box-shadow:none}
+.wr-dlg-foot .lv-btn-secondary:hover,.wr-dlg-foot .lv-btn-ghost:hover{
+  background:var(--lv-spectrum-soft);border-color:var(--lv-border-glow);color:var(--lv-brand-ink)}
+.wr-kv{display:grid;grid-template-columns:minmax(88px,110px) minmax(0,1fr);
+  gap:var(--lv-sp-2);padding:var(--lv-sp-2) 0;
+  border-bottom:1px solid var(--lv-border);font-size:var(--lv-fs-14)}
+.wr-kv:last-child{border-bottom:0}
+.wr-kv .wr-k{min-width:0;color:var(--lv-text-3)}
+.wr-kv .wr-v,.wr-kv .wr-v.lv-mono{min-width:0;font-weight:600;color:var(--lv-text-1);
+  overflow-wrap:anywhere;word-break:break-word}
+.wr-copytxt{width:100%;min-height:120px;padding:var(--lv-sp-3);resize:vertical;
+  border:1px solid var(--lv-term-bd);border-radius:var(--lv-r-md);
+  background:var(--lv-term-bg);color:var(--lv-term-tx);
+  font-family:var(--lv-font-mono);font-size:var(--lv-fs-13);line-height:1.7}
+.wr-vl{font-family:var(--lv-font-mono);font-size:var(--lv-fs-12);font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--lv-text-3)}
+
+/* ---------- 10. 轻提示：仍屏幕顶部居中 ---------- */
+.wr-toast-wrap{position:fixed;top:var(--lv-sp-2);left:50%;transform:translateX(-50%);z-index:200;
+  display:grid;gap:var(--lv-sp-2);width:min(380px,92vw);max-width:92vw;pointer-events:none}
+.wr-toast{border:1px solid var(--lv-border);border-radius:var(--lv-r-md);
+  background:var(--lv-surface);box-shadow:var(--lv-shadow-3)}
+.wr-toast-bd b{color:var(--lv-text-1)}
+.wr-toast-bd p{color:var(--lv-text-2)}
+
+/* ---------- 11. 状态 / 空态 ---------- */
+.wr-empty-block{padding:var(--lv-sp-8) var(--lv-sp-3);color:var(--lv-text-3)}
+.wr-empty-block b{color:var(--lv-text-2)}
+.wr-empty-block p{font-size:var(--lv-fs-14);line-height:1.7}
+.wr-loading{display:flex;align-items:center;gap:var(--lv-sp-2);
+  padding:var(--lv-sp-3) 0;font-size:var(--lv-fs-14);color:var(--lv-text-2)}
+.wr-spin{border-color:var(--lv-border-2);border-top-color:var(--lv-brand)}
+.wr-onboard{display:grid;gap:var(--lv-sp-3);max-width:none;margin:var(--lv-sp-3);
+  padding:var(--lv-sp-4);border:1px solid var(--lv-border);border-radius:var(--lv-r-lg);
+  background:var(--lv-surface);box-shadow:var(--lv-shadow-1)}
+.wr-onboard-hd{display:flex;align-items:center;gap:var(--lv-sp-3)}
+.wr-onboard-hd .wr-ei{width:44px;height:44px;flex:none;border-radius:var(--lv-r-md);
+  display:grid;place-items:center;background:var(--lv-spectrum-soft);
+  border:1px solid var(--lv-border-glow);color:var(--lv-brand-ink)}
+.wr-onboard-hd b{display:block;font-size:var(--lv-fs-16);font-weight:800;color:var(--lv-text-1)}
+.wr-onboard-hd span{font-size:var(--lv-fs-14);color:var(--lv-text-2)}
+.wr-onboard ul{margin:0;padding-left:var(--lv-sp-5);display:grid;gap:4px;
+  font-size:var(--lv-fs-14);line-height:1.7;color:var(--lv-text-2)}
+
+/* ---------- 12. Markdown：14px 正文，长消息折叠，宽内容局部滚动，代码恒暗 ---------- */
+.wr-markdown,.wr-md-plain{min-width:0;max-width:100%;font-size:var(--lv-fs-14);
+  line-height:1.6;color:var(--lv-text-1)}
+.wr-md-p{margin:0 0 var(--lv-sp-3)}
+.wr-md-h{margin:var(--lv-sp-4) 0 var(--lv-sp-2);font-weight:800;color:var(--lv-text-1)}
+.wr-md-h1{font-size:var(--lv-fs-18)}
+.wr-md-h2{font-size:var(--lv-fs-16)}
+.wr-md-h3{font-size:var(--lv-fs-14)}
+.wr-md-h4,.wr-md-h5,.wr-md-h6{font-size:var(--lv-fs-13);color:var(--lv-text-2)}
+.wr-md-hr{border-top:1px solid var(--lv-border)}
+.wr-md-ul,.wr-md-ol{margin:0 0 var(--lv-sp-3);padding-left:var(--lv-sp-6);font-size:var(--lv-fs-14)}
+.wr-md-table-scroll{max-width:100%;margin:0 0 var(--lv-sp-3);overflow-x:auto;border-radius:var(--lv-r-sm)}
+.wr-md-table{width:max-content;min-width:100%;border-collapse:collapse;font-size:var(--lv-fs-13)}
+.wr-md-table th,.wr-md-table td{border:1px solid var(--lv-border);padding:var(--lv-sp-1) var(--lv-sp-2)}
+.wr-md-table th{background:var(--lv-surface-2);font-weight:700;white-space:nowrap}
+.wr-md-code{margin:0 0 var(--lv-sp-3);max-width:100%;overflow:hidden;
+  border:1px solid var(--lv-term-bd);border-radius:var(--lv-r-md);background:var(--lv-term-bg)}
+.wr-md-code pre{overflow-x:auto;padding:var(--lv-sp-3);background:transparent}
+.wr-md-code code{font-size:var(--lv-fs-12);line-height:1.6;color:var(--lv-term-tx);background:none;border:0}
+.wr-md-code-label{background:var(--lv-term-panel);color:var(--lv-term-dim)}
+.wr-md-code-inline{padding:1px 4px;border-radius:var(--lv-r-xs);
+  background:var(--lv-surface-3);color:var(--lv-text-1)}
+.wr-md-link{color:var(--lv-brand-2)}
+.wr-md-link:hover{color:var(--lv-brand)}
+.wr-markdown.is-collapsed{max-height:160px;overflow:hidden}
+
+/* ---------- 13. 窄窗口微调（340 / 400 / 520 全部单列） ---------- */
+@media (max-width:520px){
+  .wr-head{gap:6px;padding:var(--lv-sp-2) 2px var(--lv-sp-2) var(--lv-sp-3)}
+  .wr-msgs-hd-top{padding-right:2px;gap:0}
+  .wr-room{gap:var(--lv-sp-2);padding:var(--lv-sp-2) var(--lv-sp-3)}
+  .wr-msg-scroll{padding:var(--lv-sp-2) var(--lv-sp-3)}
+  .wr-msg-body{max-width:94%}
+  .wr-onboard{margin:var(--lv-sp-2)}
+  .wr-menu{width:min(232px,calc(100vw - 16px))}
+}
+@media (max-width:400px){
+  .wr-brand-txt span{display:none}
+  .wr-chat-avatar.wr-room-avatar{width:36px;height:36px;font-size:var(--lv-fs-12)}
+  .wr-dlg-head,.wr-dlg-body,.wr-dlg-foot{padding-left:var(--lv-sp-3);padding-right:var(--lv-sp-3)}
+  .wr-list-foot{padding:var(--lv-sp-2) var(--lv-sp-3)}
+}
+@media (prefers-reduced-motion:reduce){
+  .wr-room,.wr-chat-tabs button,.wr-toast,.wr-msg.is-new,.wr-newmsg,.wr-copy,.wr-menu button{
+    animation:none;transition:none}
+}
