@@ -46,6 +46,7 @@
 !/docs/THIRD-PARTY.md
 !/docs/demo/workroom-dark.png
 !/docs/demo/workroom-light.png
+!/docs/demo/private-chat-demo.png
 !/installer/README.md
 !/installer/Workroom.nsi
 !/integration/Invoke-DeepSeekHelper.ps1
